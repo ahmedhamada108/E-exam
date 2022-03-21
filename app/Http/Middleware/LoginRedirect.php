@@ -16,11 +16,10 @@ class LoginRedirect
     public function handle($request, Closure $next)
     {
         if (auth('admin')->guest()) {
-
             auth('admin')->logout();
-            session()->flash('error','You need to login to your account.');
+            session()->flash('error','You need to login to your account. from admin');
             return redirect()->route('login.view');
-          }
+        }
         return $next($request);
     }
     

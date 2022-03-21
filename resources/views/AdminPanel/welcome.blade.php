@@ -66,7 +66,7 @@
         <div class="flex-center position-ref full-height">
                 <div class="top-right links">
                         <a href="{{ route('login.view') }}">@lang('AdminPanel.login')</a>
-                        <a href="">@lang('AdminPanel.register')</a>
+                        <a href="{{ route('professor.register.view') }}">@lang('AdminPanel.register')</a>
                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)           
                         <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                             {{ $properties['native'] }}

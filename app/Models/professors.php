@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class professors extends Model
+class professors extends Authenticatable
 {
     protected $table= 'professors';
     protected $fillable = [
@@ -14,7 +15,7 @@ class professors extends Model
         'password',
         'remember_token',
         'activation',
-        'çreated_at',
+        'created_at',
         'updated_at'
     ];
 }

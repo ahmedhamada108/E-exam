@@ -25,16 +25,24 @@ class Login extends BaseController
         if (auth('admin')->attempt($credentials)) {
             session()->flash('success','done');
             return redirect('/admin/Dashboard');
-        }else{
+        }else if(auth('professor')->attempt($credentials)){
+            session()->flash('success','done');
+            return redirect('/professor/Dashboard');
+        }
+        else{
             session()->flash('error','Oppes! You have entered invalid credentials');
             return redirect("login");
         }
     }// end post login func
 
     public function dashboard_view(){
-        return 'dashboard';
+        if(auth('admin')->user()->id){
+            return 'dashboard';
+        }else if(auth('professor')->user()->id){
+            return 'dashboard prof';
+        }
     }// end dashboard view func
-
+    
     public function logout()
     {
         auth('admin')->logout();
