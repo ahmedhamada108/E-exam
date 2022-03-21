@@ -66,8 +66,8 @@ class SubjectsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name_ar'=>'required|name_ar|unique:subjects',
-            'name_en'=>'required|name_en|unique:subjects',
+            'name_ar'=>'required| unique:subjects,name_ar',
+            'name_en'=>'required| unique:subjects,name_en',
             'level_id'=>'required',
             'dept_id'=>'required',
             'prof_id'=>'required'

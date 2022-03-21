@@ -42,8 +42,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'namespace'=>'Admin',
         // end of the professors routes
 
         Route::resource('admins','AdminsController')->except('show');
-        // end of the admins routes
-        
+        // end of the manage admins routes
+        Route::resource('subjects/{subject_id?}/chapters','ChaptersController')->except('show');
+
     });// end admin routes group
 
 

@@ -108,6 +108,7 @@
                         {{-- access to the departmnets object from the subject table --}}
                         <td>
                             <a  href="{{ route('subjects.edit', $subjects->id ) }}" class="btn btn-outline-primary">Edit</a>
+                            <a  href="{{ route('chapters.index', $subjects->id ) }}" class="btn btn-outline-primary">Chpaters</a>
                         <form method="post" action="{{ route('subjects.destroy',$subjects->id) }}">
                             @method('delete')
                             @csrf

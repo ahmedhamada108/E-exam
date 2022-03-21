@@ -75,6 +75,7 @@ class ProfessorsController extends Controller
             'name' => 'required',
             'email' => ['required', Rule::unique('professors')->ignore($id)],
             'password' => 'required|min:6| confirmed',
+            'activation'=>'required'
         ]);
              $professors= professors::find($id);
              $professors->update($data);

@@ -77,42 +77,44 @@
 
         <div class="content">
             <div class="title m-b-md">
-                @lang('AdminPanel.professors.index')
+                @lang('AdminPanel.chapters.index')
             </div>
             @include('layouts.errors')
             @include('layouts.sessions_messages')
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">neme</th>
+                    <th scope="col">subject name</th>
+                    <th scope="col">actions</th>
+                  </tr>
+                
+                <a href="{{ route('chapters.create',$subject_id) }}">
+                    <button class="btn-outline-primary"> Add new</button>
+                </a>
+                </thead>
+                <tbody>
+                    @foreach($chapters as $chapter)
+                    <tr>
+                        <th scope="row">{{ $chapter->id}}</th>
+                        <td>{{ $chapter->name}}</td>
+                        <td>{{ $chapter['subjects']->subject_name}}</td>
 
-                <form action="{{ route('professors.update',$professors->id) }}" method="POST" >
-                    @csrf
-                    <input type="hidden" name="_method" value="put" />
+                        <td>
+                            <a  href="{{ route('chapters.edit',[$subject_id,$chapter->id]) }}" class="btn btn-outline-primary">Edit</a>
+                        <form method="post" action="{{ route('chapters.destroy',[$subject_id,$chapter->id]) }}">
+                            @method('delete')
+                            @csrf
+                            <button class="btn btn-outline-danger">Delete</button>
 
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">name</label>
-                        <input value="{{ $professors->name }}" type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">email</label>
-                          <input value="{{ $professors->email }}" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">password</label>
-                          <input type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Password Confiramtion</label>
-                          <input type="password" name="password_confirmation" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Approval Status</label>
-                        <select name="activation" class="js-example-basic-single w-100">
-                            <option value="0" {{0 ==$professors->activation ? 'selected' : ''}}>Pending</option>
-                            <option value="1" {{1 ==$professors->activation ? 'selected' : ''}}>Accept</option>
-                            <option value="2" {{2 ==$professors->activation ? 'selected' : ''}}>Rejected</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            
+                        </form>
+                        </td>
+                      </tr>
+                    @endforeach
+                  
+                </tbody>
+              </table>               
         </div>
     </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

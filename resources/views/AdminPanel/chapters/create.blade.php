@@ -77,42 +77,22 @@
 
         <div class="content">
             <div class="title m-b-md">
-                @lang('AdminPanel.professors.index')
+                @lang('AdminPanel.levels.index')
             </div>
             @include('layouts.errors')
             @include('layouts.sessions_messages')
-
-                <form action="{{ route('professors.update',$professors->id) }}" method="POST" >
-                    @csrf
-                    <input type="hidden" name="_method" value="put" />
-
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">name</label>
-                        <input value="{{ $professors->name }}" type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">email</label>
-                          <input value="{{ $professors->email }}" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">password</label>
-                          <input type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Password Confiramtion</label>
-                          <input type="password" name="password_confirmation" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Approval Status</label>
-                        <select name="activation" class="js-example-basic-single w-100">
-                            <option value="0" {{0 ==$professors->activation ? 'selected' : ''}}>Pending</option>
-                            <option value="1" {{1 ==$professors->activation ? 'selected' : ''}}>Accept</option>
-                            <option value="2" {{2 ==$professors->activation ? 'selected' : ''}}>Rejected</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            
+            <form action="{{ route('chapters.store',$subject_id) }}" method="post" >
+                @csrf
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">name AR</label>
+                  <input value="{{ old('name_ar') }}" type="text" name="name_ar" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">name EN</label>
+                    <input value="{{ old('name_en') }}" type="text" name="name_en" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
         </div>
     </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
