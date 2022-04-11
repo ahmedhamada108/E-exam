@@ -15,6 +15,7 @@ class chapters extends Model
         'created_at',
         'updated_at'
     ];
+    protected $hidden = ['created_at','updated_at'];
 
     public function subjects(){
         return $this->hasOne(subjects::class,'id','subject_id');

@@ -74,9 +74,14 @@ class ProfessorsController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => ['required', Rule::unique('professors')->ignore($id)],
-            'password' => 'required|min:6| confirmed',
             'activation'=>'required'
         ]);
+        if($request->password){
+            $data +=$request->validate([
+                'password' => 'required|min:6| confirmed',
+                'activation'=>'required'
+            ]);
+        }
              $professors= professors::find($id);
              $professors->update($data);
              session()->flash('success', 'the professor has been edited');

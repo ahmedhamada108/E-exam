@@ -16,7 +16,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 
 Route::get('/', function () {
-    return view('AdminPanel.welcome');
+    return view('AdminPanel.dashboard');
 });
 Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web']], function(Router $router)
 {
@@ -30,7 +30,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
         Route::get('logout','Professor\Auth@logout')->name('logout.prof');
         // end auth routes
         
-        Route::resource('levels','Admin\LevelsController')->except('show');
+        // Route::resource('levels','Admin\LevelsController')->except('show');
 
         
     });// end admin routes group

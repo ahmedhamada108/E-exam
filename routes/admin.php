@@ -44,6 +44,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'namespace'=>'Admin',
         Route::resource('admins','AdminsController')->except('show');
         // end of the manage admins routes
         Route::resource('subjects/{subject_id?}/chapters','ChaptersController')->except('show');
+        // end of the chapters routes 
+        Route::resource('subjects/{subject_id?}/chapters/{chapter_id?}/questions','QuestionsController')->except('show');
+        // end of the questions routes 
+        Route::resource('exams','ExamController')->except('show');
+        // end of the exams routes 
+        Route::resource('exams/{exam_id?}/exam_structure','Exam_StructureController')->except('show');
+
+
+        Route::get('test','testController@test');
 
     });// end admin routes group
 

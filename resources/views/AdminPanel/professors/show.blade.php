@@ -1,122 +1,75 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+@extends('layouts.app')
+@section('content')
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            <div class="top-right links">
-                    <a href="{{ route('logout') }}">@lang('AdminPanel.logout')</a>
-                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)           
-                    <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                        {{ $properties['native'] }}
-                    </a>           
-                @endforeach
+<div class="content-wrapper" style="min-height: 328.4px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                <h1>professors</h1>
+                </div>
+                <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('professors.index') }}" >professors</a></li>
+                </ol>
+                </div>
             </div>
+        </div><!-- /.container-fluid -->
+    </section>
 
-        <div class="content">
-            <div class="title m-b-md">
-                @lang('AdminPanel.professors.index')
-            </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
             @include('layouts.errors')
             @include('layouts.sessions_messages')
-
+            <!-- SELECT2 EXAMPLE -->
+            <div class="card card-default">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">Edit the professor</h3>
+                </div>
+                <!-- /.card-header -->
                 <form action="{{ route('professors.update',$professors->id) }}" method="POST" >
                     @csrf
                     <input type="hidden" name="_method" value="put" />
+                    <div class="card-body">  
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">name</label>
+                            <input value="{{ $professors->name }}" type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1" class="form-label">Email</label>
+                                <input value="{{ $professors->email }}" type="text" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1" class="form-label">Password</label>
+                                <input  type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1" class="form-label">Confirm Password</label>
+                                <input  type="password" name="password_confirmation" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group" data-select2-id="11">
+                                <label>Select Professors Status</label>
+                                <select name="activation" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                    <option value="0" {{0 ==$professors->activation ? 'selected' : ''}} data-select2-id="3">Pending</option>
+                                    <option value="1" {{1 ==$professors->activation ? 'selected' : ''}} data-select2-id="14">Accept</option>
+                                    <option value="2" {{2 ==$professors->activation ? 'selected' : ''}} data-select2-id="15">Rejected</option>
+                                </select>
+                            </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>    
+                  </form>
 
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">name</label>
-                        <input value="{{ $professors->name }}" type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">email</label>
-                          <input value="{{ $professors->email }}" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">password</label>
-                          <input type="password" name="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Password Confiramtion</label>
-                          <input type="password" name="password_confirmation" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Approval Status</label>
-                        <select name="activation" class="js-example-basic-single w-100">
-                            <option value="0" {{0 ==$professors->activation ? 'selected' : ''}}>Pending</option>
-                            <option value="1" {{1 ==$professors->activation ? 'selected' : ''}}>Accept</option>
-                            <option value="2" {{2 ==$professors->activation ? 'selected' : ''}}>Rejected</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            
+            </div>
+            <!-- /.card -->
         </div>
-    </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    </body>
-</html>
+        <!-- /.container-fluid -->
+    </section>
+  <!-- /.content -->
+
+</div>
+@endsection

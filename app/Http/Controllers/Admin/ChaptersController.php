@@ -63,7 +63,7 @@ class ChaptersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\chapters  $chapters
+     * @param  \App\Models\chapters  $chapters
      * @return \Illuminate\Http\Response
      */
     public function edit($subject_id,$id)
@@ -77,7 +77,7 @@ class ChaptersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\chapters  $chapters
+     * @param  \App\Models\chapters  $chapters
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $subject_id,$id)
@@ -94,7 +94,7 @@ class ChaptersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\chapters  $chapters
+     * @param  \App\Models\chapters  $chapters
      * @return \Illuminate\Http\Response
      */
     public function destroy($subject_id,$id)
