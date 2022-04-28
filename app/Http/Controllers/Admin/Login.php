@@ -25,9 +25,15 @@ class Login extends BaseController
         if (auth('admin')->attempt($credentials)) {
             session()->flash('success','done');
             return redirect('/admin/Dashboard');
+            // end login admin logic 
         }else if(auth('professor')->attempt($credentials)){
             session()->flash('success','done');
             return redirect('/professor/Dashboard');
+            // end login professor logic 
+        }else if(auth('student')->attempt($credentials)){
+            session()->flash('success','done');
+            return redirect('/student/Dashboard');
+            // end login student logic
         }
         else{
             session()->flash('error','Oppes! You have entered invalid credentials');

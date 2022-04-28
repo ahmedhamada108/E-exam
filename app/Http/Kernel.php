@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'check.login' => \App\Http\Middleware\LoginRedirect::class,
         'check.login.prof' => \App\Http\Middleware\CheckLoginProf::class,
+        'check.login.student' => \App\Http\Middleware\CheckLoginStudent::class,
 
     ];
 }
