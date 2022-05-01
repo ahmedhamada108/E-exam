@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix'=>'student','middleware'=>['change.lang']], function(Router $router)
+{
+    Route::get("GetLevelsAndDept","Student\API\AuthAPI@LevelsAndDept");
+    Route::post("Register","Student\API\AuthAPI@postRegistration");
+    Route::post("Login","Student\API\AuthAPI@Login");
+    Route::post("Logout","Student\API\AuthAPI@logout");
+
+
 });

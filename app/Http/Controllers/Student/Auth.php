@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Student;
 
+use App\Http\Traits\ResponseTrait;
+use App\Http\Traits\ResponseTraits;
 use App\Models\departments;
 use App\Models\levels;
 use Illuminate\Http\Request;
@@ -10,8 +12,7 @@ use App\Models\students;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
-class Auth extends BaseController
+class Auth extends BaseController 
 {
     public function Register_view()
     {

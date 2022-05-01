@@ -36,6 +36,10 @@ return [
     */
 
     'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -48,11 +52,14 @@ return [
             'driver' => 'session',
             'provider' => 'student',
         ],
-
         'api' => [
-            'driver' => 'token',
+            'driver' => 'jwt',
             'provider' => 'users',
-            'hash' => false,
+            'hash'=>false
+        ],
+        'student_api' => [
+            'driver' => 'jwt',
+            'provider' => 'student_api',
         ],
     ],
 
@@ -74,7 +81,10 @@ return [
     */
 
     'providers' => [
-
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\admins::class,
+        ],
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\admins::class,
@@ -84,6 +94,10 @@ return [
             'model' => App\Models\professors::class,
         ],
         'student' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\students::class,
+        ],
+        'student_api' => [
             'driver' => 'eloquent',
             'model' => App\Models\students::class,
         ],
