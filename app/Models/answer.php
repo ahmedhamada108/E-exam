@@ -14,4 +14,7 @@ class answer extends Model
         'created_at',
         'updated_at'
     ];
+    public function mcq(){
+        return $this->hasMany(mcq::class,'id','mcq_id');
+    }
 }

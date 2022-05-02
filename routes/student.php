@@ -24,13 +24,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
     Route::post('student/register_post','Student\Auth@postRegistration')->name('student.register.post');
     //  end login routes
 
-    Route::group(['prefix'=>'student','middleware' => ['check.login.student']], function()
+    Route::group(['prefix'=>'student','namespace'=>'Student','middleware' => ['check.login.student']], function()
     {
-        Route::get('Dashboard','Student\Auth@dashboard_view')->name('dashboard.view');
-        Route::get('logout','Student\Auth@logout')->name('logout.prof');
+        Route::get('Dashboard','Auth@dashboard_view')->name('dashboard.view');
+        Route::get('logout','Auth@logout')->name('logout.student');
         // end auth routes
-        
-        
+        Route::get('exam/{subject_id?}','Auth@exam');
+
+        Route::get('subjects/','StudentSubjectController@subject_view');
+
+        Route::get('subjects/exam/{exam_id}/{subject_id}','ExamStudentController@exam_view')->name('student.exam');
+
+        Route::get('subjects/exam/{exam_name}','ExamStudentController@Return_Questions');
+
     });// end admin routes group
 
 

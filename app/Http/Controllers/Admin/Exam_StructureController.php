@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\exam;
+use App\Models\chapters;
+use App\Models\model_type;
 use Illuminate\Http\Request;
 use App\Models\exam_structure;
 use App\Http\Controllers\Controller;
-use App\Models\chapters;
-use App\Models\model_type;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Exam_StructureController extends Controller
@@ -34,13 +35,8 @@ class Exam_StructureController extends Controller
      */
     public function create($exam_id)
     {
-       $exam_structures= exam_structure::where('exam_id',$exam_id)->with([
-            'exam:id,exam_name,subject_id',
-            'chapter:id,name_'.LaravelLocalization::getCurrentLocale().' as name',
-            'model_type:id,type'
-            ])->get();
-
-        $subject_id = $exam_structures[0]->exam->subject_id ;
+       $exam= exam::where('id',$exam_id)->get();
+        $subject_id = $exam[0]->subject_id ;
         $models_type = model_type::all();
         $chapters = chapters::select(
             'id',

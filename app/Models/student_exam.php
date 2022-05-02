@@ -16,9 +16,9 @@ class student_exam extends Model
         'updated_at'
     ];
     public function exam_id(){
-        return $this->hasMany(exam::class,'id','exam_id');
+        return $this->hasOne(exam::class,'id','exam_id');
     }
-    public function mcq_id(){
-        return $this->hasMany(mcq::class,'id','mcq_id');
+    public function mcq(){
+        return $this->hasone(mcq::class,'id','mcq_id');
     }
 }

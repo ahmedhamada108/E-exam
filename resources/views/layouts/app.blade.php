@@ -94,6 +94,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+         @auth('admin')
           <li class="nav-item">
             <a href="{{ route('levels.index') }}" class="nav-link {{ request()->segment(2) == 'levels' ? 'active' : ''  }} ">
               <i class="nav-icon far fa-calendar-alt"></i>
@@ -103,6 +104,8 @@
               </p>
             </a>
           </li>
+          @endauth
+          @auth('admin')
           <li class="nav-item">
             <a href="{{ route('departments.index') }}" class="nav-link {{ request()->segment(2) == 'departments' ? 'active' : ''  }}">
               <i class="nav-icon far fa-image"></i>
@@ -111,6 +114,8 @@
               </p>
             </a>
           </li>
+          @endauth
+          @auth('admin')
           <li class="nav-item">
             <a href="{{ route('subjects.index') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
               <i class="nav-icon fas fa-columns"></i>
@@ -119,6 +124,17 @@
               </p>
             </a>
           </li>
+          @endauth
+          @auth('student')
+          <li class="nav-item">
+            <a href="{{ url('student/subjects') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-columns"></i>
+              <p>
+                Subjects
+              </p>
+            </a>
+          </li>
+          @endauth
           <li class="nav-item">
             <a href="{{ route('exams.index') }}" class="nav-link {{ request()->segment(2) == 'exams' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-columns"></i>

@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers\Student;
 
+use App\Models\mcq;
+use App\Models\exam;
+use App\Models\levels;
+use App\Models\students;
+use App\Models\subjects;
+use App\Models\departments;
+use App\Models\student_exam;
+use Illuminate\Http\Request;
+use App\Models\exam_structure;
 use App\Http\Traits\ResponseTrait;
 use App\Http\Traits\ResponseTraits;
-use App\Models\departments;
-use App\Models\levels;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use App\Models\students;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 class Auth extends BaseController 
 {
     public function Register_view()
@@ -45,10 +51,38 @@ class Auth extends BaseController
     }
 
     public function dashboard_view(){
-        if (auth('student')->user()->Is_active==0) {
-            return 'reurn 0';
-        }else{
-            return 'error';
+        $subjects= subjects::where([
+            ['level_id','=',auth('student')->user()->level_id],
+            ['dept_id','=', auth('student')->user()->dept_id]
+            ])->get();
+        return view('Studentpanel.dashboard',compact('subjects'));
+    }
+
+    public function exam($subject_id){
+
+        $exam=exam::where('subject_id',$subject_id)->get();
+        $exam_structure = exam_structure::with('exam')->where('exam_id', $exam[0]->id)->get();
+        if($exam_structure->count()==0){
+            return 'no exam';
+        }
+        // return $exam_structure;
+        foreach ($exam_structure as $exam) {
+                $questions= mcq::select('id', 'question_name', 'subject_id', 'model_type_id', 'chapter_id')->where([
+                    ['subject_id',$exam['exam']->subject_id],
+                    ['chapter_id',$exam->chapter_id]
+                    ])->with(
+                        ['subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as subject_name',
+                        'model_type:id,type']
+                    )->inRandomOrder()
+                    ->limit($exam->number_quest)->get();
+                // echo $questions ;
+            foreach ($questions as $question) {
+                student_exam::create([
+                    'exam_id'=>$exam->exam_id,
+                    'student_id'=>auth('student')->user()->id,
+                    'mcq_id'=>$question->id
+            ]);
+            }
         }
     }
     public function logout()
