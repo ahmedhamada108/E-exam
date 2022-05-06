@@ -24,8 +24,12 @@ class ChaptersController extends Controller
             ])->with([
             'subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as subject_name'
             ])->where('subject_id',$subject_id)->get();
+            if(auth('admin')->id() == null){
+                return view('ProfessorPanel.chapters.index',compact(['chapters','subject_id']));
 
-        return view('AdminPanel.chapters.index',compact(['chapters','subject_id']));
+            }else{
+                return view('AdminPanel.chapters.index',compact(['chapters','subject_id']));
+            }
     }
 
     /**
@@ -36,7 +40,12 @@ class ChaptersController extends Controller
 
     public function create($subject_id)
     {
-        return view('AdminPanel.chapters.create',compact('subject_id'));
+        if(auth('admin')->id() == null){
+            return view('ProfessorPanel.chapters.create',compact('subject_id'));
+
+        }else{
+            return view('AdminPanel.chapters.create',compact('subject_id'));
+        }
     }
 
     /**
@@ -56,8 +65,15 @@ class ChaptersController extends Controller
 
         $data['subject_id']=$subject_id;
         chapters::create($data);
-        session()->flash('success','the chapter has been added');
-        return redirect()->route('chapters.index',$subject_id);
+
+        if(auth('admin')->id() == null){
+            session()->flash('success','the chapter has been added');
+            return redirect()->route('professor.chapters.index',$subject_id);  
+        }else{
+            session()->flash('success','the chapter has been added');
+            return redirect()->route('chapters.index',$subject_id);
+        }
+
     }
 
     /**
@@ -68,8 +84,14 @@ class ChaptersController extends Controller
      */
     public function edit($subject_id,$id)
     {
-        $chapters= chapters::find($id);
-        return view('AdminPanel.chapters.show',compact(['chapters','subject_id']));
+
+        if(auth('admin')->id() == null){
+            $chapters= chapters::find($id);
+            return view('ProfessorPanel.chapters.show',compact(['chapters','subject_id']));
+        }else{
+            $chapters= chapters::find($id);
+            return view('AdminPanel.chapters.show',compact(['chapters','subject_id']));
+        }
 
     }
 
@@ -87,8 +109,14 @@ class ChaptersController extends Controller
             'name_en'=>['required', Rule::unique('chapters')->ignore($id)]
         ]);
         chapters::find($id)->update($data);
-        session()->flash('success','this item has been edited');
-        return redirect()->route('chapters.index',$subject_id);
+        if(auth('admin')->id() == null){
+            session()->flash('success','this item has been edited');
+            return redirect()->route('professor.chapters.index',$subject_id);
+        }else{
+            session()->flash('success','this item has been edited');
+            return redirect()->route('chapters.index',$subject_id);
+        }
+
     }
 
     /**
@@ -100,7 +128,13 @@ class ChaptersController extends Controller
     public function destroy($subject_id,$id)
     {
         chapters::destroy($id);
-        session()->flash('success','this item has been deleted');
-        return redirect()->route('chapters.index',$subject_id);
+
+        if(auth('admin')->id() == null){
+            session()->flash('success','this item has been deleted');
+            return redirect()->route('professor.chapters.index',$subject_id);  
+        }else{
+            session()->flash('success','this item has been deleted');
+            return redirect()->route('chapters.index',$subject_id);
+        }
     }
 }

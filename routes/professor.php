@@ -30,7 +30,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
         Route::get('logout','Professor\Auth@logout')->name('logout.prof');
         // end auth routes
         
-        // Route::resource('levels','Admin\LevelsController')->except('show');
+        Route::resource('subjects','Admin\SubjectsController',['as'=>'professor'])->except('show');
+        Route::resource('subjects/{subject_id?}/chapters','Admin\ChaptersController',['as'=>'professor'])->except('show');
+        Route::resource(
+        'subjects/{subject_id?}/chapters/{chapter_id?}/questions',
+        'Admin\QuestionsController',
+        ['as'=>'professor'])->except('show');
 
         
     });// end admin routes group

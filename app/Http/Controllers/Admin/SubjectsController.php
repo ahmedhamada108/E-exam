@@ -20,22 +20,39 @@ class SubjectsController extends Controller
      */
     public function index()
     {
-        $subjects= subjects::select([
-            'id',
-            'level_id',
-            'dept_id',
-            'name_'.LaravelLocalization::getCurrentLocale().' as subject_name'
-            // select from subject table 
-            ])->with([
-            'levels:id,name_'.LaravelLocalization::getCurrentLocale().' as name'
-            // select from levels table 
-            ,
-            'departments:id,name_'.LaravelLocalization::getCurrentLocale().' as dept_name'
-            // select from departments table
-            ])->get();
+            if(auth('admin')->id() != null){
+                $subjects= subjects::select([
+                    'id',
+                    'level_id',
+                    'dept_id',
+                    'name_'.LaravelLocalization::getCurrentLocale().' as subject_name'
+                    // select from subject table 
+                    ])->with([
+                    'levels:id,name_'.LaravelLocalization::getCurrentLocale().' as name'
+                    // select from levels table 
+                    ,
+                    'departments:id,name_'.LaravelLocalization::getCurrentLocale().' as dept_name'
+                    // select from departments table
+                    ])->get();
+                return view('AdminPanel.subjects.index',compact('subjects'));
 
-        return view('AdminPanel.subjects.index',compact('subjects'));
-        // return $subjects;
+            }else{
+                $subjects= subjects::select([
+                    'id',
+                    'level_id',
+                    'prof_id',
+                    'dept_id',
+                    'name_'.LaravelLocalization::getCurrentLocale().' as subject_name'
+                    // select from subject table 
+                    ])->where('prof_id',auth('professor')->user()->id)->with([
+                    'levels:id,name_'.LaravelLocalization::getCurrentLocale().' as name'
+                    // select from levels table 
+                    ,
+                    'departments:id,name_'.LaravelLocalization::getCurrentLocale().' as dept_name'
+                    // select from departments table
+                    ])->get();
+                return view('ProfessorPanel.subjects.index',compact('subjects'));
+            }        // return $subjects;
     }
 
     /**

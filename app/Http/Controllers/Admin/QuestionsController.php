@@ -31,8 +31,11 @@ class QuestionsController extends Controller
                     ['subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as subject_name',
                     'model_type:id,type'])->get();
         //  return $questions[0]->id;
-
-          return view('AdminPanel.questions.index',compact(['questions','subject_id','chapter_id']));
+        if(auth('admin')->id() == null){
+            return view('ProfessorPanel.questions.index',compact(['questions','subject_id','chapter_id']));
+        }else{
+            return view('AdminPanel.questions.index',compact(['questions','subject_id','chapter_id']));
+        }
 
     }
 
@@ -43,8 +46,11 @@ class QuestionsController extends Controller
      */
     public function create($subject_id,$chapter_id)
     {
-
-        return view('AdminPanel.questions.create',compact(['subject_id','chapter_id']));
+        if(auth('admin')->id() == null){
+            return view('ProfessorPanel.questions.create',compact(['subject_id','chapter_id']));
+        }else{
+            return view('AdminPanel.questions.create',compact(['subject_id','chapter_id']));
+        }
     }
 
     /**
@@ -86,8 +92,14 @@ class QuestionsController extends Controller
                 break;
                 // end the is true & false case
         }
-        session()->flash('success','the item has been added');
-        return redirect()->route('questions.index',[$subject_id,$chapter_id]);
+
+        if(auth('admin')->id() == null){
+            session()->flash('success','the item has been added');
+            return redirect()->route('professor.questions.index',[$subject_id,$chapter_id]);
+        }else{
+            session()->flash('success','the item has been added');
+            return redirect()->route('questions.index',[$subject_id,$chapter_id]);
+        }
     }
 
     /**
@@ -101,7 +113,11 @@ class QuestionsController extends Controller
         $question= mcq::find($id);
         $answer= answer::where('mcq_id',$id)->get();
         // return $answer;
-        return view('AdminPanel.questions.show',compact('chapter_id','subject_id','question','answer'));
+        if(auth('admin')->id() == null){
+            return view('ProfessorPanel.questions.show',compact('chapter_id','subject_id','question','answer'));
+        }else{
+            return view('AdminPanel.questions.show',compact('chapter_id','subject_id','question','answer'));
+        }
     }
 
     /**
@@ -147,8 +163,13 @@ class QuestionsController extends Controller
                 break;
                 // end the is true & false case
         }
-        session()->flash('success','the item has been added');
-        return redirect()->route('questions.index',[$subject_id,$chapter_id]);
+        if(auth('admin')->id() == null){
+            session()->flash('success','the item has been added');
+            return redirect()->route('professor.questions.index',[$subject_id,$chapter_id]);
+        }else{
+            session()->flash('success','the item has been added');
+            return redirect()->route('questions.index',[$subject_id,$chapter_id]);
+        }
     }
 
     /**

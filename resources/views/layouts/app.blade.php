@@ -53,10 +53,16 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">WebSite</a>
       </li>
+      @auth('admin')
       <li class="nav-item d-none d-sm-inline-block">
             <a class="nav-link" href="{{ route('logout') }} ">@lang('AdminPanel.logout')</a>
       </li>
-
+      @endauth
+      @auth('professor')
+      <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link" href="{{ route('logout.prof') }} ">@lang('AdminPanel.logout')</a>
+      </li>
+      @endauth
       <li class="nav-item dropdown">
         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Languages</a>
         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
@@ -127,7 +133,7 @@
           @endauth
           @auth('student')
           <li class="nav-item">
-            <a href="{{ url('student/subjects') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
+            <a href="{{ route('student/subjects') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
               <i class="nav-icon fas fa-columns"></i>
               <p>
                 Subjects
@@ -135,6 +141,17 @@
             </a>
           </li>
           @endauth
+          @auth('professor')
+          <li class="nav-item">
+            <a href="{{ route('professor.subjects.index') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-columns"></i>
+              <p>
+                Subjects
+              </p>
+            </a>
+          </li>
+          @endauth
+          @auth('admin')
           <li class="nav-item">
             <a href="{{ route('exams.index') }}" class="nav-link {{ request()->segment(2) == 'exams' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-columns"></i>
@@ -143,6 +160,8 @@
               </p>
             </a>
           </li>
+          @endauth
+          @auth('admin')
           <li class="nav-item">
             <a href="{{ route('professors.index') }}" class="nav-link {{ request()->segment(2) == 'professors' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-columns"></i>
@@ -151,6 +170,8 @@
               </p>
             </a>
           </li>
+          @endauth
+          @auth('admin')
           <li class="nav-item">
             <a href="{{ route('admins.index') }}" class="nav-link {{ request()->segment(2) == 'admins' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-columns"></i>
@@ -159,6 +180,7 @@
               </p>
             </a>
           </li>
+          @endauth
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
