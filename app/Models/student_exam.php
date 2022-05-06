@@ -12,6 +12,7 @@ class student_exam extends Model
         'exam_id',
         'student_id',
         'mcq_id',
+        'correct_answer',
         'created_at',
         'updated_at'
     ];

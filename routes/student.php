@@ -36,6 +36,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
         Route::get('subjects/exam/{exam_id}/{subject_id}','ExamStudentController@exam_view')->name('student.exam');
 
         Route::get('subjects/exam/{exam_name}','ExamStudentController@Return_Questions');
+        Route::post('subjects/exam/{exam_name}/post','ExamStudentController@submit_exam')->name('post_exam');
 
     });// end admin routes group
 

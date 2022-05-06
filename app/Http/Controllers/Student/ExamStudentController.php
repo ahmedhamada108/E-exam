@@ -21,12 +21,12 @@ class ExamStudentController extends BaseController
 
         if($if_opened->count()==0 || $if_opened[0]->exam_id==null ){ 
 
-            // if the studen open the exam to first time 
-            $exam=exam::where('subject_id',$subject_id)->get();
+            // if the student open the exam to the first time
+            $exam=exam::where('subject_id', $subject_id)->get();
             $exam_structure = exam_structure::with('exam')->where('exam_id', $exam[0]->id)->get();
 
             foreach ($exam_structure as $exam) {
-                    $questions= mcq::select('id', 'question_name', 'subject_id', 'model_type_id', 'chapter_id')->where([
+                $questions= mcq::select('id', 'question_name','correct_answer', 'subject_id', 'model_type_id', 'chapter_id')->where([
                         ['subject_id',$exam['exam']->subject_id],
                         ['chapter_id',$exam->chapter_id]
                         ])->with(
@@ -34,29 +34,46 @@ class ExamStudentController extends BaseController
                             'model_type:id,type']
                         )->inRandomOrder()
                         ->limit($exam->number_quest)->get();
-                    // return the questions for this student 
-
-                foreach ($questions as $question) {
+                // return the questions for this student
+        foreach ($questions as $question) {
                     student_exam::create([
                         'exam_id'=>$exam->exam_id,
                         'student_id'=>auth('student')->user()->id,
-                        'mcq_id'=>$question->id
+                        'mcq_id'=>$question->id,
+                        'correct_answer'=>$question->correct_answer
                 ]);
                 }
-                //end storing the question to the student question table 
+                //end storing the question to the student question table
 
                 $questions_exam = student_exam::where('exam_id',$exam_id)->with([
                     'exam_id',
                 'mcq'
                 ])->get();
-                // end the return questions 
+                // end the return questions
             }
         }else{
             // return message if the user opend the exam before
             session()->flash('error', 'You cannot open the exam again');
             return redirect('student/subjects');
         }
-        return view('Studentpanel.exam',compact(['questions_exam'])); 
+        return view('Studentpanel.exam',compact(['questions_exam','exam_id']));
     }
 
+    public function Return_Questions(){
+        $questions_exam = student_exam::where('exam_id',7)->with([
+            'exam_id',
+        'mcq'
+        ])->get();
+        return $questions_exam;
+    }
+
+    public function submit_exam(Request $request,$exam_id){
+        $data = $request->validate([
+            'mcq_id'=>'required'
+        ]); // end validate the data
+        $data += [
+            'exam_id'=>$exam_id,
+        ];// end adding the subject and chapter IDs
+        return $request;
+    }
 }

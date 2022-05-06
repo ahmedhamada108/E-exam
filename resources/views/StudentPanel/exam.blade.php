@@ -19,13 +19,16 @@
       <!-- Main content -->
       <section class="content">
           <div class="container-fluid">
+            @include('layouts.errors')
+            @include('layouts.sessions_messages')
               <!-- SELECT2 EXAMPLE -->
               <div class="card card-default">
                   <div class="card-header bg-success">
                       <h3 class="card-title">Exam</h3>
                   </div>
+                  
                   <!-- /.card-header -->
-                  <form action="#" method="post">
+                  <form action="{{ route('post_exam',$exam_id) }}" method="post">
                       @csrf
                     @foreach($questions_exam as $question)
                         <div class="card-body">
@@ -36,21 +39,22 @@
                           ?>
                           @foreach($options as $option)
                               <div class="input-group d-flex align-items-center mb-2">
-                                <strong class="mr-2">A: </strong>
                                 <div class="input-group-prepend">
                                     <span style="padding: 11px;" class="input-group-text">
-                                    <input class="correct" name="correct" type="radio"></span>
+                                    <input class="correct" name="{{$question->mcq->id}}" type="radio"></span>
                                 </div>
-                                <input type="text" disabled id="answer1" name="answer[]" value="{{$option->answer}}" class="form-control">
+                                <input type="text"  id="answer1" value="{{$option->answer}}" class="form-control">
                             </div>
+                             <!-- /input-group -->
                           @endforeach
+                          <input type="text" style="display: none"  name="mcq_id[]" value="{{$question->mcq->id}}" class="form-control">
                         </div>
+                        <div  class="form-group mt-4">
+                            <label for="exampleInputEmail1">Correct Answer:</label>
+                            <input disabled id="correct" name="student_answer[]" type="text" class="form-control" id="exampleInputEmail1">
+                        </div>
+
                     @endforeach      
-                          <!-- /input-group -->
-                          <div style="display: none" class="form-group mt-4">
-                              <label for="exampleInputEmail1">Correct Answer:</label>
-                              <input id="correct" name="correct_answer" type="text" class="form-control" id="exampleInputEmail1" style="display: none">
-                          </div>
 
                       <!-- /.card-body -->
                       <div class="card-footer">
