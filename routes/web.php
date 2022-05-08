@@ -16,5 +16,5 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 */
 
 Route::get('/', function () {
-    return view('AdminPanel.dashboard');
+    return view('welcome');
 });

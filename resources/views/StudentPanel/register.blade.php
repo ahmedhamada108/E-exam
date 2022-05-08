@@ -20,7 +20,7 @@
   @include('layouts.sessions_messages')
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="" class="h1"><b>Smart</b>Exam</a>
+      <a href="/" class="h1"><b>Smart</b>Exam</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new student</p>
@@ -99,7 +99,7 @@
         </div>
       </form>
 
-      <a href="login.html" class="text-center">I already have a membership</a>
+      <a href="{{ url('/login') }}" class="text-center">I already have a membership</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->

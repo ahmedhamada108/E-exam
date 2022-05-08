@@ -10,7 +10,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
   <!-- iCheck -->
@@ -48,11 +48,6 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Dashboard</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">WebSite</a>
-      </li>
       @auth('admin')
       <li class="nav-item d-none d-sm-inline-block">
             <a class="nav-link" href="{{ route('logout') }} ">@lang('AdminPanel.logout')</a>
@@ -61,6 +56,11 @@
       @auth('professor')
       <li class="nav-item d-none d-sm-inline-block">
             <a class="nav-link" href="{{ route('logout.prof') }} ">@lang('AdminPanel.logout')</a>
+      </li>
+      @endauth
+      @auth('student')
+      <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link" href="{{ route('logout.student') }} ">@lang('AdminPanel.logout')</a>
       </li>
       @endauth
       <li class="nav-item dropdown">
@@ -93,7 +93,12 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a href="#" class="d-block">User Name</a>
+          @auth('admin')
+            <a href="{{ url('/admin/Dashboard') }}" class="d-block">Dashboard</a>            
+          @endauth
+          @auth('professor')
+            <a href="{{ url('/professor/Dashboard') }}" class="d-block">Dashboard</a>            
+          @endauth
         </div>
       </div>
 
@@ -103,8 +108,8 @@
          @auth('admin')
           <li class="nav-item">
             <a href="{{ route('levels.index') }}" class="nav-link {{ request()->segment(2) == 'levels' ? 'active' : ''  }} ">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
                 Levels
                 <span class="badge badge-info right">4</span>
               </p>
@@ -114,7 +119,7 @@
           @auth('admin')
           <li class="nav-item">
             <a href="{{ route('departments.index') }}" class="nav-link {{ request()->segment(2) == 'departments' ? 'active' : ''  }}">
-              <i class="nav-icon far fa-image"></i>
+              <i class="nav-icon fas fa-sitemap"></i>
               <p>
                 Departments
               </p>
@@ -124,7 +129,7 @@
           @auth('admin')
           <li class="nav-item">
             <a href="{{ route('subjects.index') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fas fa-book"></i>
               <p>
                 Subjects
               </p>
@@ -133,8 +138,8 @@
           @endauth
           @auth('student')
           <li class="nav-item">
-            <a href="{{ route('student/subjects') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-columns"></i>
+            <a href="{{ route('student.subjects.index') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-book"></i>
               <p>
                 Subjects
               </p>
@@ -144,7 +149,7 @@
           @auth('professor')
           <li class="nav-item">
             <a href="{{ route('professor.subjects.index') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fas fa-book"></i>
               <p>
                 Subjects
               </p>
@@ -154,7 +159,7 @@
           @auth('admin')
           <li class="nav-item">
             <a href="{{ route('exams.index') }}" class="nav-link {{ request()->segment(2) == 'exams' ? 'active' : ''  }}">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fas fa-scroll"></i>
               <p>
                 Exams
               </p>
@@ -164,7 +169,7 @@
           @auth('admin')
           <li class="nav-item">
             <a href="{{ route('professors.index') }}" class="nav-link {{ request()->segment(2) == 'professors' ? 'active' : ''  }}">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fas fa-user-tie"></i>
               <p>
                 Professors
               </p>
@@ -173,8 +178,28 @@
           @endauth
           @auth('admin')
           <li class="nav-item">
+            <a href="{{ route('students.index') }}" class="nav-link {{ request()->segment(2) == 'students' ? 'active' : ''  }}">
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                Students
+              </p>
+            </a>
+          </li>
+          @endauth
+          @auth('professor')
+          <li class="nav-item">
+            <a href="{{ route('professor.students.index') }}" class="nav-link {{ request()->segment(2) == 'students' ? 'active' : ''  }}">
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                Students
+              </p>
+            </a>
+          </li>
+          @endauth
+          @auth('admin')
+          <li class="nav-item">
             <a href="{{ route('admins.index') }}" class="nav-link {{ request()->segment(2) == 'admins' ? 'active' : ''  }}">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fas fa-user-lock"></i>
               <p>
                 Admins
               </p>
@@ -190,7 +215,7 @@
 
 @yield('content')
             <footer class="main-footer">
-                <strong>Copyright &copy; 2022 <a href="index.html">Smart Exam</a>.</strong>
+                <strong>Copyright &copy; 2022 <a href="/">Smart Exam</a>.</strong>
                 All rights reserved.
                 <div class="float-right d-none d-sm-inline-block">
                   <b>Design by Abdallah Fathy</b>

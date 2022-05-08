@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\departments;
+use App\Models\levels;
+use App\Models\professors;
+use App\Models\students;
+use App\Models\subjects;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -42,11 +47,14 @@ class Login extends BaseController
     }// end post login func
 
     public function dashboard_view(){
-        if(auth('admin')->user()->id){
-            return 'dashboard';
-        }else if(auth('professor')->user()->id){
-            return 'dashboard prof';
-        }
+
+        $levels= levels::all();
+        $departments= departments::all();
+        $subjects= subjects::all();
+        $professors= professors::all();
+        $students= students::all();
+        $students_pending= students::where('Is_active',0)->get();
+        return view('AdminPanel.dashboard',compact(['levels','departments','subjects','professors','students_pending','students']));
     }// end dashboard view func
     
     public function logout()

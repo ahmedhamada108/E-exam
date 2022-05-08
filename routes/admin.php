@@ -51,6 +51,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'namespace'=>'Admin',
         // end of the exams routes 
         Route::resource('exams/{exam_id?}/exam_structure','Exam_StructureController')->except('show');
 
+        Route::resource('students','StudentsController')->except('show');
+
 
         Route::get('test','testController@test');
 
