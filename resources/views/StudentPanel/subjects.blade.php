@@ -1,65 +1,50 @@
-@extends('layouts.app')
+@extends('layouts.student')
 @section('content')
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        @include('layouts.errors')
-        @include('layouts.sessions_messages')
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Student Subjects</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Subjects</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          @foreach($subjects as $subject)
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>{{$subject->name}}</h3>
-
-                <p> Doctor: {{ $subject['professors']->name }}</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <?php
-                $exam =App\Models\exam::where('subject_id',$subject->id)->get();
-              ?>
-              @if($exam->count()==0)
-                <a href="#" class="small-box-footer">Not exists exam <i class="fas fa-arrow-circle-right"></i></a>
-              @else
-                @foreach($exam as $exam_check)
-                  <a href="{{ route('student.exam',[$exam_check->id,$subject->id]) }}" class="small-box-footer">{{ $exam_check->exam_name }} <i class="fas fa-arrow-circle-right"></i></a>
-                @endforeach
-              @endif
+    <!-- ---------------------------------- -->
+    <!-- Subjects Start -->
+    @include('layouts.errors')
+    @include('layouts.sessions_messages')
+    <section class="subjects">
+        <div class="container">
+            <div class="row">
+            @foreach($subjects as $subject)
+                <!-- Card -->
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card">
+                        <img src="{{ $subject->subject_image}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <div class="card-title d-flex align-items-center">
+                              <div class="img-box">
+                                  <img class="w-100 h-100" src="{{ asset('assets_web/images/doctors/2.jpg') }}" alt="">
+                              </div>
+                              <div class="title">{{ $subject['professors']->name }}</div>
+                          </div>
+                          <p class="card-text">
+                              </p><div class="name">{{ $subject->name }}</div>
+                              <div class="info">{{ $subject['levels']->name }}, {{ $subject['departments']->name }}</div>
+                          <p></p>
+                        </div>
+                        <?php
+                            $exam =App\Models\exam::where('subject_id',$subject->id)->get();
+                        ?>
+                        @if($exam->count()==0)
+                            <div class="card-footer">
+                                <a class="start" href="#">There is no exam for this subject</a>
+                            </div>
+                        @else
+                            @foreach($exam as $exam_check)
+                                <div class="card-footer">
+                                    <a class="start" href="{{ route('student.exam',[$exam_check->id,$subject->id]) }}">Start Exam Now</a>
+                                </div>
+                            @endforeach
+                        @endif
+                                </div>
+                            </div>
+            @endforeach
             </div>
-          </div>
-          <!-- ./col -->
-          @endforeach
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
- 
+    <!-- Subjects End -->
+    <!-- ---------------------------------- -->
+
 @endsection

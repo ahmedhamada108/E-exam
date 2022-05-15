@@ -12,6 +12,13 @@ class exam extends Model
         'exam_name',
         'subject_id',
         'prof_id',
+        'start_at',
+        'duration',
+        'end_at',
+        'created_at',
+        'updated_at'
+    ];
+    protected $hidden=[
         'created_at',
         'updated_at'
     ];

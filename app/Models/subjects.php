@@ -12,6 +12,7 @@ class subjects extends Model
         'id',
         'name_ar',
         'name_en',
+        'subject_image',
         'dept_id',
         'level_id',
         'prof_id',

@@ -10,6 +10,7 @@ use App\Models\students;
 use App\Models\departments;
 use App\Models\student_exam;
 use Illuminate\Http\Request;
+use App\Models\student_grade;
 use App\Models\exam_structure;
 use App\Http\Traits\ResponseTrait;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -104,7 +105,48 @@ class ExamStudent_API extends BaseController
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
     }
+    public function Submit_exam(Request $request){
+        try{
+            if(auth('student_api')->id() != null){
 
+                $validator = Validator::make($request->all(), [
+                    'exam_id'=>'required',
+                    'student_answer'=>'required'
+                ]);
+                if ($validator->fails()) {
+                    $code = $this->returnCodeAccordingToInput($validator);
+                    return $this->returnValidationError($code, $validator);
+                }
+                $count=0;
+                foreach ($request['student_answer'] as $student_answer) {
+                    $mcq= student_exam::where(['exam_id'=>$request->exam_id],['student_id'=>auth('student')->id()])->get();
+                    $mcq[$count]->update([
+                        'student_answer'=>$student_answer
+                    ]);
+                    $count++;
+                }
+                $student_grade= student_exam::where(['exam_id'=>$request->exam_id],['student_id'=>auth('student')->id()])
+                ->whereRaw('correct_answer = student_answer')->count();
+                $exam_grade= count($request['student_answer']);
+
+                student_grade::create([
+                    'exam_id'=>$request->exam_id,
+                    'student_id'=> auth('student_api')->id(),
+                    'exam_grade'=>$exam_grade,
+                    'student_grade'=>$student_grade
+                ]);
+                return $this->returnData('grade_info',[
+                    'exam_grade'=>$exam_grade,
+                    'student_grade'=>$student_grade
+                ]);
+            }else{
+                return $this->returnError('E500', 'Please login to your account');
+                // check login student
+            }
+        }catch (\Exception $ex) {
+            return $this->returnError($ex->getCode(), $ex->getMessage());
+        }
+    }
     public function Delete_questions(Request $request)
     {
         // start validate the parameters     

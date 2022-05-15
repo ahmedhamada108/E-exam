@@ -30,6 +30,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
         Route::get('exam/{subject_id?}','Auth@exam');
 
         Route::get('subjects/','StudentSubjectController@subject_view')->name('student.subjects.index');
+        
+        Route::get('account/','AccountController@account_view')->name('student.account.index');
 
         Route::get('subjects/exam/{exam_id}/{subject_id}','ExamStudentController@exam_view')->name('student.exam');
 

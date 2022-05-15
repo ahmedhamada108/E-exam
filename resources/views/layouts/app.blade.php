@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="{{ asset('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/daterangepicker/daterangepicker.css') }}">
+  <link rel="icon" href="{{ asset('assets_web/logo.png') }}" type="image/x-icon" />
+  <link rel="shortcut icon" href="{{ asset('assets_web/logo.png') }}" type="image/x-icon" />
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.min.css') }}">
   <style>

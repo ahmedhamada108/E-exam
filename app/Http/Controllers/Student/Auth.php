@@ -51,11 +51,7 @@ class Auth extends BaseController
     }
 
     public function dashboard_view(){
-        $subjects= subjects::where([
-            ['level_id','=',auth('student')->user()->level_id],
-            ['dept_id','=', auth('student')->user()->dept_id]
-            ])->get();
-        return view('Studentpanel.dashboard',compact('subjects'));
+        return view('Studentpanel.dashboard');
     }
 
     public function exam($subject_id){

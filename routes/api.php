@@ -30,6 +30,8 @@ Route::group(['prefix'=>'student','namespace'=>'Student\API','middleware'=>['cha
         Route::get("exam_view","ExamStudent_API@exam_view");
         Route::get("return_options","ExamStudent_API@Return_options");
         Route::delete("Delete_questions","ExamStudent_API@Delete_questions");
+        Route::post("submit_exam","ExamStudent_API@Submit_exam");
+
 
     });
 

@@ -30,7 +30,7 @@
                     <h3 class="card-title">Add New Subject</h3>
                 </div>
                 <!-- /.card-header -->
-                <form action="{{ route('subjects.store') }}" method="post" >
+                <form action="{{ route('subjects.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">  
                         <div class="form-group">
@@ -40,7 +40,11 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1" class="form-label">name EN</label>
                             <input value="{{ old('name_en') }}" type="text" name="name_en" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">Subject Images</label>
+                            <input type="file" name="subject_image" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        </div>
                         <div class="form-group">
                             <label>Select levels</label>
                             <select name="level_id" class="form-control select2" style="width: 100%;">

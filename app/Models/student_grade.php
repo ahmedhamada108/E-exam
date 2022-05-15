@@ -4,23 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class student_exam extends Model
+class student_grade extends Model
 {
-    protected $table= 'student_exam';
+    protected $table= 'student_grade';
     protected $fillable = [
         'id',
         'exam_id',
         'student_id',
-        'mcq_id',
-        'correct_answer',
-        'student_answer',
+        'exam_grade',
+        'student_grade',
         'created_at',
         'updated_at'
     ];
-    public function exam_id(){
+    public function exam(){
         return $this->hasOne(exam::class,'id','exam_id');
     }
-    public function mcq(){
-        return $this->hasone(mcq::class,'id','mcq_id');
+    public function student(){
+        return $this->hasOne(students::class,'id','student');
     }
 }

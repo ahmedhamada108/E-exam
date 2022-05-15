@@ -9,6 +9,7 @@ use App\Models\departments;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class SubjectsController extends Controller
@@ -87,11 +88,20 @@ class SubjectsController extends Controller
             'name_en'=>'required| unique:subjects,name_en',
             'level_id'=>'required',
             'dept_id'=>'required',
-            'prof_id'=>'required'
+            'prof_id'=>'required',
+            'subject_image'=>'required'
         ]);
-        subjects::create($data);
-        session()->flash('success','the subject has been added');
-        return redirect()->route('subjects.index');
+        if($request->hasFile('subject_image')){
+            $file_extension = $request->subject_image->getClientOriginalExtension();
+            $img_name = time() . '.' . $file_extension;
+            $path = storage_path('app/public/Subject_images');
+            $request->subject_image->move($path, $img_name);
+            $data['subject_image']='/storage/Subject_images/'.$img_name;
+                // end save image file
+            subjects::create($data);
+            session()->flash('success','the subject has been added');
+            return redirect()->route('subjects.index');
+        }   
     }
     /**
      * Show the form for editing the specified resource.
@@ -134,7 +144,22 @@ class SubjectsController extends Controller
             'dept_id'=>'required',
             'prof_id'=>'required'
         ]);
-        subjects::find($id)->update($data);
+
+        if($request->hasFile('subject_image')){
+            $file_extension = $request->subject_image->getClientOriginalExtension();
+            $img_name = time() . '.' . $file_extension;
+            $path = storage_path('app/public/Subject_images');
+            $request->subject_image->move($path, $img_name);
+            $data['subject_image']='/storage/Subject_images/'.$img_name;
+                // end save image file
+            $subject = subjects::find($id);
+            $image = $subject->subject_image;
+            File::delete(storage_path('app/public/Subject_images/'.$image));
+            // delete image from the storage path
+            $subject->update($data);
+        }else{
+            subjects::find($id)->update($data);
+        }
         session()->flash('success','this item has been edited');
         return redirect()->route('subjects.index');
     }
@@ -147,6 +172,10 @@ class SubjectsController extends Controller
      */
     public function destroy($id)
     {
+        $subjects = subjects::find($id);
+        $image = $subjects->subject_image;
+        File::delete(storage_path('app/public/Subject_images/'.$image));
+        // delete image from the storage path
         subjects::find($id)->delete();
         session()->flash('success','this item has been deleted');
         return redirect()->route('subjects.index');

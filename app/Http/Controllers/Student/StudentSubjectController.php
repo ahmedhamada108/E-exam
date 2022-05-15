@@ -17,6 +17,7 @@ class StudentSubjectController extends BaseController
 
         $subjects= subjects::select(
             'id',
+            'subject_image',
             'name_'.LaravelLocalization::getCurrentLocale().' as name',
             'level_id',
             'dept_id',

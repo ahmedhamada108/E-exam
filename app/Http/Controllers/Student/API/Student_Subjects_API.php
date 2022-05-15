@@ -27,6 +27,7 @@ class Student_Subjects_API extends BaseController
                     'id',
                     'name_'.app()->getLocale().' as name',
                     'level_id',
+                    'subject_image',
                     'dept_id',
                     'prof_id'
                     )->with(
@@ -37,6 +38,7 @@ class Student_Subjects_API extends BaseController
                     ['level_id','=',auth('student_api')->user()->level_id],
                     ['dept_id','=', auth('student_api')->user()->dept_id]
                     ])->get();
+                    
                 return $this->returnData('Subjects Student',$subjects); 
             }else{
                 return $this->returnError('E500', 'Please login to your account');
@@ -50,7 +52,17 @@ class Student_Subjects_API extends BaseController
         try{
             if(auth('student_api')->id() != null){
                 if(isset($request->subject_id)){
-                    $check_exists_exam =exam::where('subject_id',$request->subject_id)->get();
+                    $check_exists_exam =exam::where('subject_id',$request->subject_id)->
+                    get([
+                        'id',
+                        'exam_name',
+                        'subject_id',
+                        'prof_id',
+                        'start_at',
+                        'duration',
+                        'end_at',
+                    ]);
+
                     if($check_exists_exam->count()==0){
                         return $this->returnError('E433','There is no exam for this subject');
                         // exam status

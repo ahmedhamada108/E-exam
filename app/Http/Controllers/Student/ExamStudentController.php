@@ -9,6 +9,8 @@ use App\Models\subjects;
 use App\Models\student_exam;
 use Illuminate\Http\Request;
 use App\Models\exam_structure;
+use App\Models\student_grade;
+use App\Models\students;
 use Illuminate\Routing\Controller as BaseController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -19,7 +21,7 @@ class ExamStudentController extends BaseController
         $if_opened= student_exam::where('exam_id',$exam_id)->get();
         // check the exam is opened before or not
 
-        if($if_opened->count()==0 || $if_opened[0]->exam_id==null ){ 
+        if(0==0){ 
 
             // if the student open the exam to the first time
             $exam=exam::where('subject_id', $subject_id)->get();
@@ -34,6 +36,7 @@ class ExamStudentController extends BaseController
                             'model_type:id,type']
                         )->inRandomOrder()
                         ->limit($exam->number_quest)->get();
+
                 // return the questions for this student
         foreach ($questions as $question) {
                     student_exam::create([
@@ -45,10 +48,8 @@ class ExamStudentController extends BaseController
                 }
                 //end storing the question to the student question table
 
-                $questions_exam = student_exam::where('exam_id',$exam_id)->with([
-                    'exam_id',
-                'mcq'
-                ])->get();
+                $questions_exam = student_exam::where('exam_id',$exam_id)->
+                with(['exam_id','mcq'])->get();
                 // end the return questions
             }
         }else{
@@ -56,24 +57,43 @@ class ExamStudentController extends BaseController
             session()->flash('error', 'You cannot open the exam again');
             return redirect('student/subjects');
         }
-        return view('Studentpanel.exam',compact(['questions_exam','exam_id']));
+        // return $questions_exam;
+        return view('StudentPanel.exam',compact(['questions_exam','exam_id']));
     }
 
-    public function Return_Questions(){
-        $questions_exam = student_exam::where('exam_id',7)->with([
-            'exam_id',
-        'mcq'
-        ])->get();
-        return $questions_exam;
-    }
+
 
     public function submit_exam(Request $request,$exam_id){
+
         $data = $request->validate([
             'mcq_id'=>'required'
         ]); // end validate the data
         $data += [
             'exam_id'=>$exam_id,
-        ];// end adding the subject and chapter IDs
-        return $request;
+        ];// end adding the exam ID
+
+        $count=0;
+        foreach ($request['student_answer'] as $student_answer) {
+            $mcq= student_exam::where(['exam_id'=>$exam_id],['student_id'=>auth('student')->id()])->get();
+            $mcq[$count]->update([
+                'student_answer'=>$student_answer
+            ]);
+            $count++;
+        }
+        $student_grade= student_exam::where(['exam_id'=>$exam_id],['student_id'=>auth('student')->id()])
+        ->whereRaw('correct_answer = student_answer')->count();
+        $exam_grade= count($request['mcq_id']);
+
+        student_grade::create([
+            'exam_id'=>$exam_id,
+            'student_id'=> auth('student')->id(),
+            'exam_grade'=>$exam_grade,
+            'student_grade'=>$student_grade
+        ]);
+        session()->flash('success_exam',"Your final grade for this exam is");
+        session()->flash('student_grade',$student_grade);
+        session()->flash('exam_grade',$exam_grade);
+        // return view('Studentpanel.dashboard',compact(['student_grade','exam_grade']));
+        return redirect('student/Dashboard');
     }
 }

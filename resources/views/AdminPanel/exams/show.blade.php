@@ -54,6 +54,17 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">Start At:</label>
+                            <input value="{{ \Carbon\Carbon::parse($exam->start_at)->format('Y-m-d\TH:i') }}" type="datetime-local" name="start_at" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="form-label">End After:</label>
+                            <input  type="number" value="{{ $exam->duration }}" name="end_at" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                            <span id="exampleInputEmail1" style="padding: 4px;color: #ff0000ad;position: absolute;" class="feedback">
+                                Please Determine The time by Minutes only
+                            </span>
+                        </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success">Submit</button>
                         </div>

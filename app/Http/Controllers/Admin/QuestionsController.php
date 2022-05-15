@@ -140,6 +140,7 @@ class QuestionsController extends Controller
             'subject_id'=>$subject_id,
             'chapter_id'=>$chapter_id
         ];// end adding the subject and chapter IDs
+        
         $Is_TrueFalse = $request->Is_TrueFalse;
         switch ($Is_TrueFalse) {
 
