@@ -21,7 +21,7 @@ class ExamStudentController extends BaseController
         $if_opened= student_exam::where('exam_id',$exam_id)->get();
         // check the exam is opened before or not
 
-        if(0==0){ 
+        if($if_opened->count()==0 || $if_opened[0]->exam_id==null){ 
 
             // if the student open the exam to the first time
             $exam=exam::where('subject_id', $subject_id)->get();

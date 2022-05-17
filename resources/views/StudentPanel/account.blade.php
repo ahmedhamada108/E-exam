@@ -2,8 +2,7 @@
 @section('content')
     <!-- ---------------------------------- -->
     <!-- account Start -->
-    @include('layouts.errors')
-    @include('layouts.sessions_messages')
+
     <div class="profile">
         <div class="container">
             <div class="mt-5 mb-5">
@@ -11,6 +10,8 @@
                     <div class="card-header">
                       My Account
                     </div>
+                    @include('layouts.errors')
+                    @include('layouts.sessions_messages')
                     <div class="card-body">
                         <table class="table table-striped table-bordered table-hover table-responsive-md">
                             <thead>
@@ -31,7 +32,7 @@
                                     <td>{{ $student_exam['exam']->professors->name }}</td>
                                     <td>{{ $student_exam->student_grade }}/<span>{{ $student_exam->exam_grade }}</span></td>
                                     <td>{{ $student_exam->created_at->toDayDateTimeString() }}</td>
-                                    <td><a href="#" class="view">View Exam</a></td>
+                                    <td><a href="{{ route('student.account.viewexam',$student_exam->exam_id) }}" class="view">View Exam</a></td>
                                 </tr>
                             @endforeach    
                                 

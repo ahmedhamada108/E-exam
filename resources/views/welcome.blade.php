@@ -10,7 +10,8 @@
                     <img src="{{ asset('assets_web/images/landing-page/text.png') }}" alt="" class="img-fluid">
                         <div class="mt-4">
                             <a href="{{ url('/login') }}" class="btn btn-primary m-0 d-inline-block">Login</a>
-                            <a href="index.html" class="btn btn-secondary d-inline-block ml-3">Register</a>
+                            <a href="{{ route('student.register.view') }}" class="btn btn-secondary d-inline-block ml-3">Register As Student</a>
+                            <a href="{{ route('professor.register.view') }}" style="width: 217px; !important" class="btn btn-secondary d-inline-block ml-3">Register As Professor</a>
                         </div>   
                 </div>
             </div>

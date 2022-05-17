@@ -40,8 +40,9 @@
                 <div class="col p-0">
                     <div class="top-header">
                         <div class="logo pl-2">
-                            <a class="navbar-brand" href="index.html"><img style="width: 50px;" src="{{ asset('assets_web/logo.png') }}"
-                                    alt="logo"></a>
+                            <a class="navbar-brand" href="/">
+                                <img style="width: 50px;" src="{{ asset('assets_web/logo.png') }}"alt="logo">
+                            </a>
                         </div>
                         <div class="main-menu mx-auto" id="nav">
                             <nav id="navbar-example2" class="navbar navbar-expand-lg navbar-light">
@@ -70,7 +71,29 @@
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="sbout.html">About Us</a>
+                                        </li>  
+                                        @auth('admin')
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                                            </li>
+                                        @endauth
+                                        @auth('professor')
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('logout.prof') }}">Logout</a>
+                                            </li>
+                                        @endauth
+                                        @auth('student')
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('logout.student') }}">Logout</a>
+                                            </li>
+                                        @endauth
+                                        @foreach(LaravelLocalization::getSupportedLocales('hideDefaultLocaleInURL = true') as $localeCode => $properties)
+                                        <li>
+                                            <a class="nav-link" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                {{ $properties['native'] }}
+                                            </a>
                                         </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </nav>

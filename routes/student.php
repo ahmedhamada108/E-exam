@@ -18,6 +18,9 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web']], function(Router $router)
 {
+    Route::get('/', function () {
+        return view('welcome');
+    });
     Route::get('student/register','Student\Auth@Register_view')->name('student.register.view');
     Route::post('student/register_post','Student\Auth@postRegistration')->name('student.register.post');
     //  end login routes
@@ -32,6 +35,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
         Route::get('subjects/','StudentSubjectController@subject_view')->name('student.subjects.index');
         
         Route::get('account/','AccountController@account_view')->name('student.account.index');
+        Route::get('account/view_exam/{exam_id}','AccountController@exam_view')->name('student.account.viewexam');
+
 
         Route::get('subjects/exam/{exam_id}/{subject_id}','ExamStudentController@exam_view')->name('student.exam');
 
