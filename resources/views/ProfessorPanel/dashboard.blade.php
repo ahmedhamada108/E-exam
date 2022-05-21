@@ -28,20 +28,6 @@
         <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>43</h3>
-
-                <p>Levels Number</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-speedometer"></i>
-              </div>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
                 <h3>{{ $subjects->count() }}</h3>

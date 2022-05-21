@@ -12,6 +12,7 @@ class exam extends Model
         'exam_name',
         'subject_id',
         'prof_id',
+        'Is_available',
         'start_at',
         'duration',
         'end_at',

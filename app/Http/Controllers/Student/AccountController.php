@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Student;
 
+use Carbon\Carbon;
 use App\Models\exam;
 use App\Models\student_exam;
-use App\Models\student_grade;
 use Illuminate\Http\Request;
+use App\Models\student_grade;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -26,8 +27,12 @@ class AccountController extends BaseController
 
     public function exam_view($exam_id){
 
-        $if_exam_exists= exam::findOrfail($exam_id)->count();
-        if($if_exam_exists < 0) // check if this exam is expired or not
+        $if_exam_exists= exam::where([
+            ['id',$exam_id],
+            ['Is_available',0],
+            ['start_at','>=', Carbon::now()->timestamp]
+            ])->count();
+        if($if_exam_exists == 0) // check if this exam is expired or not
         {
             $questions_exam= student_exam::where(
                 ['exam_id'=>$exam_id],

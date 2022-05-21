@@ -15,10 +15,10 @@ class StudentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request )
     {
-        $students= students::all(); 
-        if(auth('admin')->id() == null){
+        
+        if(auth('admin')->id() == null){ 
         ######## Get the students by the following professor ########
                 $students = students::select('id','level_id','dept_id')->get();
                 foreach($students as $student){
@@ -26,12 +26,38 @@ class StudentsController extends Controller
                     // return $subjects;
                     foreach ($subjects as $subject) {
                         $query_students_prof= students::where(['dept_id'=>$subject->dept_id],['level_id'=>$subject->level_id]);
-                        $students= $query_students_prof->get();
+                        
+                        $students='';
+                        if($request->get('sort') == "pending_status")
+                        {
+                            $students = $query_students_prof->where('Is_active',0)->get();
+                        }
+                        else if($request->get('sort')=='accepted_status')
+                        {
+                            $students = $query_students_prof->where('Is_active',1)->get();
+                        }
+                        else
+                        {
+                            $students= $query_students_prof->get();
+                        }
                     }
                 }
         ######## Get the students by the following professor ########
             return view('ProfessorPanel.students.index',compact('students'));
         }else{
+            $students='';
+            if($request->get('sort') == "pending_status")
+            {
+                $students = students::where('Is_active',0)->get();
+            }
+            else if($request->get('sort')=='accepted_status')
+            {
+                $students = students::where('Is_active',1)->get();
+            }
+            else
+            {
+                $students= students::all();
+            }
             return view('AdminPanel.students.index',compact('students'));
         }
 

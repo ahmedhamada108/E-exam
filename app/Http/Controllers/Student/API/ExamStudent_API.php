@@ -38,7 +38,10 @@ class ExamStudent_API extends BaseController
                 }
             // end the validate the parameters 
             
-                $if_opened= student_exam::where('exam_id',$request->exam_id)->get();
+                $if_opened= student_exam::where(
+                ['exam_id'=>$request->exam_id],
+                ['student_id'=>auth('student_api')->id()]
+                )->get();
                 // check the exam is opened before or not             
                 if($if_opened->count()==0 || $if_opened[0]->exam_id==null){ 
 

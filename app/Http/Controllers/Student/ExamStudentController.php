@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Models\answer;
+use Carbon\Carbon;
 use App\Models\mcq;
 use App\Models\exam;
+use App\Models\answer;
+use App\Models\students;
 use App\Models\subjects;
 use App\Models\student_exam;
 use Illuminate\Http\Request;
-use App\Models\exam_structure;
 use App\Models\student_grade;
-use App\Models\students;
+use App\Models\exam_structure;
 use Illuminate\Routing\Controller as BaseController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -18,7 +19,10 @@ class ExamStudentController extends BaseController
 {
     public function exam_view($exam_id,$subject_id){
 
-        $if_opened= student_exam::where('exam_id',$exam_id)->get();
+        $if_opened= student_exam::where(
+            ['exam_id'=>$exam_id],
+            ['student_id'=>auth('student')->id()]
+            )->get();
         // check the exam is opened before or not
 
         if($if_opened->count()==0 || $if_opened[0]->exam_id==null){ 
@@ -65,35 +69,58 @@ class ExamStudentController extends BaseController
 
     public function submit_exam(Request $request,$exam_id){
 
-        $data = $request->validate([
-            'mcq_id'=>'required'
-        ]); // end validate the data
-        $data += [
-            'exam_id'=>$exam_id,
-        ];// end adding the exam ID
+        $If_check_submitted= student_grade::where([
+            ['exam_id',$exam_id],
+            ['student_id',auth('student')->id]
+            ])->count();
+            // check if the exam is submitted before or not
 
-        $count=0;
-        foreach ($request['student_answer'] as $student_answer) {
-            $mcq= student_exam::where(['exam_id'=>$exam_id],['student_id'=>auth('student')->id()])->get();
-            $mcq[$count]->update([
-                'student_answer'=>$student_answer
-            ]);
-            $count++;
-        }
-        $student_grade= student_exam::where(['exam_id'=>$exam_id],['student_id'=>auth('student')->id()])
-        ->whereRaw('correct_answer = student_answer')->count();
-        $exam_grade= count($request['mcq_id']);
+        $if_exam_available= exam::where([
+            ['id',$exam_id],
+            ['Is_available',0],
+            ['start_at','>=', Carbon::now()->timestamp]
+            ])->count();
+        // check if the exam is expired or not 
+        if($If_check_submitted ==0){
 
-        student_grade::create([
-            'exam_id'=>$exam_id,
-            'student_id'=> auth('student')->id(),
-            'exam_grade'=>$exam_grade,
-            'student_grade'=>$student_grade
-        ]);
-        session()->flash('success_exam',"Your final grade for this exam is");
-        session()->flash('student_grade',$student_grade);
-        session()->flash('exam_grade',$exam_grade);
-        // return view('Studentpanel.dashboard',compact(['student_grade','exam_grade']));
-        return redirect('student/Dashboard');
+            if($if_exam_available > 0){
+                
+                $data = $request->validate([
+                    'mcq_id'=>'required'
+                ]); // end validate the data
+                $data += [
+                    'exam_id'=>$exam_id,
+                ];// end adding the exam ID
+        
+                $count=0;
+                foreach ($request['student_answer'] as $student_answer) {
+                    $mcq= student_exam::where(['exam_id'=>$exam_id],['student_id'=>auth('student')->id()])->get();
+                    $mcq[$count]->update([
+                        'student_answer'=>$student_answer
+                    ]);
+                    $count++;
+                }
+                $student_grade= student_exam::where(['exam_id'=>$exam_id],['student_id'=>auth('student')->id()])
+                ->whereRaw('correct_answer = student_answer')->count();
+                $exam_grade= count($request['mcq_id']);
+        
+                student_grade::create([
+                    'exam_id'=>$exam_id,
+                    'student_id'=> auth('student')->id(),
+                    'exam_grade'=>$exam_grade,
+                    'student_grade'=>$student_grade
+                ]);
+                session()->flash('success_exam',"Your final grade for this exam is");
+                session()->flash('student_grade',$student_grade);
+                session()->flash('exam_grade',$exam_grade);
+                return redirect('student/Dashboard');
+            }else{
+                session()->flash('error','the exam is finished so, you cannot submit the exam');
+                return redirect('student/Dashboard');
+            }// end if statement of checking the exam is expired or not  
+        }else{
+            session()->flash('error','You canno submit this exam again');
+            return redirect('student/Dashboard');
+        }// end if statement of checking the exam is submiited before or not
     }
 }

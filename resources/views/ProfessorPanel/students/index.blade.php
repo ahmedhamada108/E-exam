@@ -31,6 +31,23 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
+                <div class="dropdown" style="float: right;">
+                  <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
+                      Sort by:
+                      @if(Request::get('sort')=="pending_status")
+                        Status: Pending Students
+                      @elseif(Request::get('sort')=="accepted_status")
+                        Status: Accepted Student 
+                      @elseif(Request::get('sort')== null)
+                          All Students
+                      @endif
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <a href="{{url()->current()."?sort=pending_status"}}" class="dropdown-item" >Status: Pending Students</a>
+                      <a href="{{url()->current()."?sort=accepted_status"}}" class="dropdown-item" >Status: Accepted Students</a>
+                  </div>
+                </div>
+
                 <a class="btn btn-success mb-4 text-bold" href="{{route('students.create')}}">Add New + </a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>

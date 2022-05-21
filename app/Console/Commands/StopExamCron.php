@@ -7,21 +7,21 @@ use App\Models\exam;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class DeleteExamCron extends Command
+class StopExamCron extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'delete_exam:cron';
+    protected $signature = 'stop_exam:cron';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'stop the exam after finish the time';
 
     /**
      * Create a new command instance.
@@ -41,6 +41,8 @@ class DeleteExamCron extends Command
     public function handle()
     {
         Log::info("Cron is working fine!");
-       return exam::where('end_at','<=', Carbon::now()->timestamp )->delete();
+       return exam::where('end_at','<=', Carbon::now()->timestamp)->update([
+           'Is_available'=>0
+       ]);
     }
 }
