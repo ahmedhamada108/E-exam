@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="{{ asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
+  <link rel="icon" href="{{ asset('assets_web/logo.png') }}" type="image/x-icon" />
+  <link rel="shortcut icon" href="{{ asset('assets_web/logo.png') }}" type="image/x-icon" />
 </head>
 <body class="hold-transition register-page">
 <div class="register-box" style="width: 380px !important;">
@@ -20,15 +22,15 @@
   @include('layouts.sessions_messages')
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="/" class="h1"><b>Smart</b>Exam</a>
+      <a href="/" class="h1"><b>@lang('login_register.login.smart_exam')</b></a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Login to Your account</p>
+      <p class="login-box-msg">@lang('login_register.login.login_to_your_account')</p>
 
       <form action="{{ route('login.post') }}" method="post">
         @csrf
         <div class="input-group mb-3">
-          <input type="email" value="{{ old('email') }}" class="form-control" placeholder="Email" name="email">
+          <input type="email" value="{{ old('email') }}" class="form-control" placeholder="@lang('login_register.login.email')" name="email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -36,7 +38,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password" placeholder="Password">
+          <input type="password" class="form-control" name="password" placeholder="@lang('login_register.login.password')">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -46,13 +48,13 @@
 
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <button type="submit" style="width: 121%;!important" class="btn btn-primary btn-block">@lang('login_register.login.login')</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
-      <a href="{{ route('student.register.view') }}" class="text-center">I have not student account</a>
-      <a href="{{ route('professor.register.view') }}" class="text-center">I have not professor account</a>
+      <a href="{{ route('student.register.view') }}" class="text-center">@lang('login_register.login.i_have_not_student_account')</a>
+      <a href="{{ route('professor.register.view') }}" class="text-center">@lang('login_register.login.i_have_not_student_professor')</a>
 
     </div>
     <!-- /.form-box -->

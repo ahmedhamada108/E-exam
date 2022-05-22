@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">@lang('panel.dashboard.dashboard')</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
+              <li class="breadcrumb-item"><a href="#">@lang('panel.dashboard.home')</a></li>
+              <li class="breadcrumb-item active">@lang('panel.dashboard.dashboard')</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,7 +32,7 @@
               <div class="inner">
                 <h3>{{ $levels->count() }}</h3>
 
-                <p>Levels Number</p>
+                <p>@lang('panel.dashboard.levels_number')</p>
               </div>
               <div class="icon">
                 <i class="ion ion-speedometer"></i>
@@ -45,7 +45,7 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h3>{{ $subjects->count() }}</h3>
-                <p>Subjects Number</p>
+                <p>@lang('panel.dashboard.subjects_number')</p>
               </div>
               <div class="icon">
                 <i class="ion-ios-book-outline" style="top: -6px; !important"></i>
@@ -59,7 +59,7 @@
               <div class="inner">
                 <h3>{{ $students->count() }}</h3>
 
-                <p>Students Registrations</p>
+                <p>@lang('panel.dashboard.Students_Registrations')</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -73,7 +73,7 @@
               <div class="inner">
                 <h3>{{ $students_pending->count() }}</h3>
 
-                <p>Students Pending Registrations</p>
+                <p>@lang('panel.dashboard.Students_Pending_Registrations')</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add" style="top: 4px; !important"></i>

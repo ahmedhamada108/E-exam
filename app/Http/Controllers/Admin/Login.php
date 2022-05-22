@@ -29,20 +29,20 @@ class Login extends BaseController
         $credentials = $request->only('email', 'password');
         if (auth('admin')->attempt($credentials)) {
             session()->flash('success','done');
-            return redirect('/admin/Dashboard');
+            return redirect()->route('admin.dashboard.view');
             // end login admin logic 
         }else if(auth('professor')->attempt($credentials)){
             session()->flash('success','done');
-            return redirect('/professor/Dashboard');
+            return redirect()->route('professor.dashboard.view');
             // end login professor logic 
         }else if(auth('student')->attempt($credentials)){
             session()->flash('success','done');
-            return redirect('/student/Dashboard');
+            return redirect()->route('student.dashboard.view');
             // end login student logic
         }
         else{
-            session()->flash('error','Oppes! You have entered invalid credentials');
-            return redirect("login");
+            session()->flash('error',__('login_register.login.Oppes!_You_have_entered_invalid_credentials'));
+            return redirect()->route('login.view');
         }
     }// end post login func
 
@@ -60,7 +60,7 @@ class Login extends BaseController
     public function logout()
     {
         auth('admin')->logout();
-        return redirect('/login');
+        return redirect()->route('login.view');
     }// end logout func
     
 }

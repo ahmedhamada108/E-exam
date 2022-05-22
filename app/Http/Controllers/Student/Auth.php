@@ -46,7 +46,7 @@ class Auth extends BaseController
         $data= $request->except('password');
         $data['password']= bcrypt($request->password);
         students::create($data);
-        session()->flash('success','The Registeraion request has been sent to the admin');
+        session()->flash('success',__('student.auth.The_Registeraion_request_has_been_sent_to_the_admin'));
         return redirect()->route('student.register.view');
     }
 
@@ -54,37 +54,10 @@ class Auth extends BaseController
         return view('Studentpanel.dashboard');
     }
 
-    public function exam($subject_id){
-
-        $exam=exam::where('subject_id',$subject_id)->get();
-        $exam_structure = exam_structure::with('exam')->where('exam_id', $exam[0]->id)->get();
-        if($exam_structure->count()==0){
-            return 'no exam';
-        }
-        // return $exam_structure;
-        foreach ($exam_structure as $exam) {
-                $questions= mcq::select('id', 'question_name', 'subject_id', 'model_type_id', 'chapter_id')->where([
-                    ['subject_id',$exam['exam']->subject_id],
-                    ['chapter_id',$exam->chapter_id]
-                    ])->with(
-                        ['subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as subject_name',
-                        'model_type:id,type']
-                    )->inRandomOrder()
-                    ->limit($exam->number_quest)->get();
-                // echo $questions ;
-            foreach ($questions as $question) {
-                student_exam::create([
-                    'exam_id'=>$exam->exam_id,
-                    'student_id'=>auth('student')->user()->id,
-                    'mcq_id'=>$question->id
-            ]);
-            }
-        }
-    }
     public function logout()
     {
         auth('student')->logout();
-        return redirect('/login');
+        return redirect()->route('login.view');
     }// end logout func
 
 }

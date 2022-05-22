@@ -24,7 +24,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'namespace'=>'Admin',
 
     Route::group(['prefix'=>'admin','middleware' => ['check.login']], function()
     {
-        Route::get('Dashboard','Login@dashboard_view')->name('dashboard.view');
+        Route::get('Dashboard','Login@dashboard_view')->name('admin.dashboard.view');
         
         Route::get('logout','Login@logout')->name('logout');
         // end dashboard & logout routes

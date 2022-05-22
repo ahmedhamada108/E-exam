@@ -29,8 +29,12 @@ Route::group(['prefix'=>'student','namespace'=>'Student\API','middleware'=>['cha
         Route::get("check_exists_exam","Student_Subjects_API@check_exists_exam");
         Route::get("exam_view","ExamStudent_API@exam_view");
         Route::get("return_options","ExamStudent_API@Return_options");
+
         Route::delete("Delete_questions","ExamStudent_API@Delete_questions");
+
         Route::post("submit_exam","ExamStudent_API@Submit_exam");
+        Route::get("view_student_exams","student_account_API@view_exams");
+        Route::get("view_student_exam","student_account_API@view_exam");
 
 
     });

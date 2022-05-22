@@ -41,7 +41,7 @@ class AccountController extends BaseController
                 // return $questions_exam;
             return view('StudentPanel.previous_exam',compact(['questions_exam']));
         }else{
-            session()->flash('error','You can open this exam after finished it only');
+            session()->flash('error',__('student.account.You_can_open_this_exam_after_finished_it_only'));
             return redirect()->route('student.account.index');
         }
     }

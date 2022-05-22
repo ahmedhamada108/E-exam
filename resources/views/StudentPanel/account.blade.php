@@ -8,7 +8,7 @@
             <div class="mt-5 mb-5">
                 <div class="card">
                     <div class="card-header">
-                      My Account
+                      @lang('student.account.My_Account')
                     </div>
                     @include('layouts.errors')
                     @include('layouts.sessions_messages')
@@ -16,12 +16,12 @@
                         <table class="table table-striped table-bordered table-hover table-responsive-md">
                             <thead>
                                 <tr>
-                                    <th scope="col">Exam Name</th>
-                                    <th scope="col">Subject Name</th>
-                                    <th scope="col">Doctor Name</th>
-                                    <th scope="col">degree</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col">@lang('student.account.Exam_Name')</th>
+                                    <th scope="col">@lang('student.account.Subject_Name')</th>
+                                    <th scope="col">@lang('student.account.Doctor_Name')</th>
+                                    <th scope="col">@lang('student.account.degree')</th>
+                                    <th scope="col">@lang('student.account.Date')</th>
+                                    <th scope="col">@lang('student.account.Actions')</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,7 +32,7 @@
                                     <td>{{ $student_exam['exam']->professors->name }}</td>
                                     <td>{{ $student_exam->student_grade }}/<span>{{ $student_exam->exam_grade }}</span></td>
                                     <td>{{ $student_exam->created_at->toDayDateTimeString() }}</td>
-                                    <td><a href="{{ route('student.account.viewexam',$student_exam->exam_id) }}" class="view">View Exam</a></td>
+                                    <td><a href="{{ route('student.account.viewexam',$student_exam->exam_id) }}" class="view">@lang('student.account.View_Exam')</a></td>
                                 </tr>
                             @endforeach    
                                 

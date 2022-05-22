@@ -55,36 +55,36 @@
                                     <ul class="navbar-nav mx-auto nav">
                                         @if(auth('student')->id())
                                             <li class="nav-item">
-                                                <a class="nav-link {{ request()->segment(2) == '' ? 'student' : ''  }}" href="{{ url('student/Dashboard') }}">Home</a>
+                                                <a class="nav-link {{ request()->segment(2) == '' ? 'student' : ''  }}" href="{{ route('student.dashboard.view') }}">@lang('student.header.home')</a>
                                             </li>
                                         @else
                                             <li class="nav-item">
-                                                <a class="nav-link {{ request()->segment(2) == '' ? 'active' : ''  }}" href="/">Home</a>
+                                                <a class="nav-link {{ request()->segment(2) == '' ? 'active' : ''  }}" href="/">@lang('student.header.home')</a>
                                             </li>
                                         @endif
 
                                         <li class="nav-item">
-                                            <a class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : ''  }}" href="{{ url('/student/subjects')}}">Subjects</a>
+                                            <a class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : ''  }}" href="{{ route('student.subjects.index')}}">@lang('student.header.subjects')</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link  {{ request()->segment(2) == 'account' ? 'active' : ''  }}" href="{{ route('student.account.index') }}">My Account</a>
+                                            <a class="nav-link  {{ request()->segment(2) == 'account' ? 'active' : ''  }}" href="{{ route('student.account.index') }}">@lang('student.header.my_account')</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="sbout.html">About Us</a>
+                                            <a class="nav-link" href="sbout.html">@lang('student.header.about_us')</a>
                                         </li>  
                                         @auth('admin')
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                                                <a class="nav-link" href="{{ route('logout') }}">@lang('student.header.logout')</a>
                                             </li>
                                         @endauth
                                         @auth('professor')
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('logout.prof') }}">Logout</a>
+                                                <a class="nav-link" href="{{ route('logout.prof') }}">@lang('student.header.logout')</a>
                                             </li>
                                         @endauth
                                         @auth('student')
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('logout.student') }}">Logout</a>
+                                                <a class="nav-link" href="{{ route('logout.student') }}">@lang('student.header.logout')</a>
                                             </li>
                                         @endauth
                                         @foreach(LaravelLocalization::getSupportedLocales('hideDefaultLocaleInURL = true') as $localeCode => $properties)
@@ -114,7 +114,7 @@
             <div class="row mr-0 ml-0">
 
                 <div class="info col-12 col-lg-5 mb-5">
-                    <h2 class="h1 mb-3">Smart<span>Exam</span></h2>
+                    <h2 class="h1 mb-3">@lang('student.header.smart')<span>@lang('student.header.exam')</span></h2>
                         <p> 
                            lorem ipsum dolor sit alermet, consecuter adpesighing elit,sed do eusmod  tempor incidintal ut lubor et dolor e manage aliqui . 
                             lorem ipsum dolor sit alermet, consecuter adpesighing elit,sed do eusmod  tempor incidintal ut lubor et dolor e manage aliqui .

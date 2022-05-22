@@ -27,7 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
 
     Route::group(['prefix'=>'student','namespace'=>'Student','middleware' => ['check.login.student']], function()
     {
-        Route::get('Dashboard','Auth@dashboard_view')->name('dashboard.view');
+        Route::get('Dashboard','Auth@dashboard_view')->name('student.dashboard.view');
         Route::get('logout','Auth@logout')->name('logout.student');
         // end auth routes
         Route::get('exam/{subject_id?}','Auth@exam');

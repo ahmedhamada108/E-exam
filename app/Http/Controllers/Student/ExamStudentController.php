@@ -58,8 +58,8 @@ class ExamStudentController extends BaseController
             }
         }else{
             // return message if the user opend the exam before
-            session()->flash('error', 'You cannot open the exam again');
-            return redirect('student/subjects');
+            session()->flash('error', __('student.exam.You_cannot_open_the_exam_again'));
+            return redirect()->route('student.subjects.index');
         }
         // return $questions_exam;
         return view('StudentPanel.exam',compact(['questions_exam','exam_id']));
@@ -110,17 +110,17 @@ class ExamStudentController extends BaseController
                     'exam_grade'=>$exam_grade,
                     'student_grade'=>$student_grade
                 ]);
-                session()->flash('success_exam',"Your final grade for this exam is");
+                session()->flash('success_exam',__('student.exam.Your_final_grade_for_this_exam_is'));
                 session()->flash('student_grade',$student_grade);
                 session()->flash('exam_grade',$exam_grade);
-                return redirect('student/Dashboard');
+                return redirect()->route('student.dashboard.view');
             }else{
-                session()->flash('error','the exam is finished so, you cannot submit the exam');
-                return redirect('student/Dashboard');
+                session()->flash('error',__('student.exam.the_exam_is_finished_so_you_cannot_submit_the_exam'));
+                return redirect()->route('student.dashboard.view');
             }// end if statement of checking the exam is expired or not  
         }else{
-            session()->flash('error','You canno submit this exam again');
-            return redirect('student/Dashboard');
+            session()->flash('error',__('student.exam.You_cannot_submit_this_exam_again'));
+            return redirect()->route('student.dashboard.view');
         }// end if statement of checking the exam is submiited before or not
     }
 }

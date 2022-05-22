@@ -31,37 +31,38 @@
                         ?>
                         @if($exam->count()==0)
                             <div class="card-footer">
-                                <a class="start" href="#">There is no exam for this subject</a>
+                                <a class="start" href="#">@lang('student.subjects.There_is_no_exam_for_this_subject')</a>
                             </div>
                         @endif
                         {{-- handle not exists exam for this subject     --}}
 
                         @if(
-                        $opening_exam->count()==1 &&
-                        \Carbon\Carbon::parse($opening_exam[0]->start_at)->timestamp >= \Carbon\Carbon::now()->timestamp
+                        $opening_exam->count() >=1 &&
+                        \Carbon\Carbon::parse($opening_exam[0]->start_at)->timestamp <= \Carbon\Carbon::now()->timestamp &&
+                        \Carbon\Carbon::parse($opening_exam[0]->end_at)->timestamp >= \Carbon\Carbon::now()->timestamp
                         ) 
                             @foreach($opening_exam as $exam_check)
                                 <div class="card-footer">
-                                    <a class="start" href="{{ route('student.exam',[$exam_check->id,$subject->id]) }}">Start the exam now</a>
+                                    <a class="start" href="{{ route('student.exam',[$exam_check->id,$subject->id]) }}">@lang('student.subjects.Start_the_exam_now')</a>
                                 </div>
                             @endforeach
                         @endif
                         {{-- handle the exam is opening --}}
                         
-                        @if($pending_exam->count()==1 &&
+                        @if($pending_exam->count() >= 1 &&
                         \Carbon\Carbon::parse($pending_exam[0]->end_at)->timestamp <= \Carbon\Carbon::now()->timestamp
                         )
                             <div class="card-footer">
-                                <a class="start" href="#">There is no exam for this subject finish</a>
+                                <a class="start" href="#">@lang('student.subjects.There_is_no_exam_for_this_subject')</a>
                             </div>
                         @endif
                         {{-- handle the exam is finished --}}
 
-                        @if($pending_exam->count()==1 &&
+                        @if($pending_exam->count() >= 1 &&
                         \Carbon\Carbon::parse($pending_exam[0]->start_at)->timestamp >= \Carbon\Carbon::now()->timestamp
                         )
                             <div class="card-footer">
-                                <a class="start" href="#">Will start in: <br>{{\Carbon\Carbon::parse($pending_exam[0]->start_at)->isoFormat('D MMMM YYYY, h:mm a')}}</a>
+                                <a class="start" href="#">@lang('student.subjects.Will_start_in'): <br>{{\Carbon\Carbon::parse($pending_exam[0]->start_at)->isoFormat('D MMMM YYYY, h:mm a')}}</a>
                             </div>
                         @endif
                         {{-- handle the exam is comming --}}

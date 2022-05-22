@@ -23,7 +23,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
 
     Route::group(['prefix'=>'professor','middleware' => ['check.login.prof']], function()
     {
-        Route::get('Dashboard','Professor\Auth@dashboard_view')->name('dashboard.view');
+        Route::get('Dashboard','Professor\Auth@dashboard_view')->name('professor.dashboard.view');
         Route::get('logout','Professor\Auth@logout')->name('logout.prof');
         // end auth routes
         

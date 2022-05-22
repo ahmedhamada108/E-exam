@@ -52,21 +52,21 @@
       <li class="nav-item d-none d-sm-inline-block">
       @auth('admin')
       <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" href="{{ route('logout') }} ">@lang('AdminPanel.logout')</a>
+            <a class="nav-link" href="{{ route('logout') }} ">@lang('panel.dashboard.logout')</a>
       </li>
       @endauth
       @auth('professor')
       <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" href="{{ route('logout.prof') }} ">@lang('AdminPanel.logout')</a>
+            <a class="nav-link" href="{{ route('logout.prof') }} ">@lang('panel.dashboard.logout')</a>
       </li>
       @endauth
       @auth('student')
       <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" href="{{ route('logout.student') }} ">@lang('AdminPanel.logout')</a>
+            <a class="nav-link" href="{{ route('logout.student') }} ">@lang('panel.dashboard.logout')</a>
       </li>
       @endauth
       <li class="nav-item dropdown">
-        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Languages</a>
+        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">@lang('panel.dashboard.langauges')</a>
         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
           <li>
             @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)           
@@ -88,7 +88,7 @@
     
     <a href="index3.html" class="brand-link">
       <img src="{{ asset('assets_web/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Smart Exam</span>
+      <span class="brand-text font-weight-light">@lang('panel.side_menue.smart_exam')</span>
     </a>
 
     <!-- Sidebar -->
@@ -97,10 +97,10 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
           @auth('admin')
-            <a href="{{ url('/admin/Dashboard') }}" class="d-block">Dashboard</a>            
+            <a href="{{ url('/admin/Dashboard') }}" class="d-block">@lang('panel.side_menue.dashboard')</a>            
           @endauth
           @auth('professor')
-            <a href="{{ url('/professor/Dashboard') }}" class="d-block">Dashboard</a>            
+            <a href="{{ url('/professor/Dashboard') }}" class="d-block">@lang('panel.side_menue.dashboard')</a>            
           @endauth
         </div>
       </div>
@@ -113,8 +113,7 @@
             <a href="{{ route('levels.index') }}" class="nav-link {{ request()->segment(2) == 'levels' ? 'active' : ''  }} ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                Levels
-                <span class="badge badge-info right">4</span>
+                  @lang('panel.side_menue.levels')
               </p>
             </a>
           </li>
@@ -124,7 +123,7 @@
             <a href="{{ route('departments.index') }}" class="nav-link {{ request()->segment(2) == 'departments' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-sitemap"></i>
               <p>
-                Departments
+                @lang('panel.side_menue.departments')
               </p>
             </a>
           </li>
@@ -134,7 +133,7 @@
             <a href="{{ route('subjects.index') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
               <i class="nav-icon fas fa-book"></i>
               <p>
-                Subjects
+                @lang('panel.side_menue.subjects')
               </p>
             </a>
           </li>
@@ -144,7 +143,7 @@
             <a href="{{ route('student.subjects.index') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
               <i class="nav-icon fas fa-book"></i>
               <p>
-                Subjects
+                @lang('panel.side_menue.subjects')
               </p>
             </a>
           </li>
@@ -154,7 +153,7 @@
             <a href="{{ route('professor.subjects.index') }}" class="nav-link {{ request()->segment(2) == 'subjects' ? 'active' : '' }}">
               <i class="nav-icon fas fa-book"></i>
               <p>
-                Subjects
+                @lang('panel.side_menue.subjects')
               </p>
             </a>
           </li>
@@ -164,7 +163,7 @@
             <a href="{{ route('exams.index') }}" class="nav-link {{ request()->segment(2) == 'exams' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-scroll"></i>
               <p>
-                Exams
+                @lang('panel.side_menue.exams')
               </p>
             </a>
           </li>
@@ -174,7 +173,7 @@
             <a href="{{ route('professors.index') }}" class="nav-link {{ request()->segment(2) == 'professors' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-user-tie"></i>
               <p>
-                Professors
+                @lang('panel.side_menue.professors')
               </p>
             </a>
           </li>
@@ -184,7 +183,7 @@
             <a href="{{ route('students.index') }}" class="nav-link {{ request()->segment(2) == 'students' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
-                Students
+                @lang('panel.side_menue.students')
               </p>
             </a>
           </li>
@@ -194,7 +193,7 @@
             <a href="{{ route('professor.students.index') }}" class="nav-link {{ request()->segment(2) == 'students' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
-                Students
+                @lang('panel.side_menue.students')
               </p>
             </a>
           </li>
@@ -204,7 +203,7 @@
             <a href="{{ route('admins.index') }}" class="nav-link {{ request()->segment(2) == 'admins' ? 'active' : ''  }}">
               <i class="nav-icon fas fa-user-lock"></i>
               <p>
-                Admins
+                @lang('panel.side_menue.admins')
               </p>
             </a>
           </li>

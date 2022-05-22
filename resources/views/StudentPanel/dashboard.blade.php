@@ -5,15 +5,15 @@
         <div class="container-fluid">
             <div class="main-contain">
                 <div>
-                    <h1 class="m-0">Smart<span>Exam</span></h1>
-                    <h3 class="m-0">The <span>BEST TEST</span> for students and professor</h3>
+                    <h1 class="m-0">@lang('student.site.exam') <span> @lang('student.site.smart')</span></h1>
+                    <h3 class="m-0"><span>@lang('student.site.the_best_test')</span> @lang('student.site.for_students_and_professors')</h3>
                     <img src="assets/images/landing-page/text.png" alt="" class="img-fluid">
                     @if (session('success_exam'))
                         <h3 class="m-0">{{ session('success_exam') }}<span style="color: #ff4c3b;font-size: 25px;">
                             {{ session('student_grade') }}</span>/{{ session('exam_grade') }}</h3>
                     @else
                         @auth('student')
-                            <h3 class="m-0">Welcome <span>{{ auth('student')->user()->name }}</span> in Smart Exam</h3>
+                            <h3 class="m-0">@lang('student.site.welcome') <span>{{ auth('student')->user()->name }}</span> @lang('student.site.in_smart_exam')</h3>
                         @endauth
                     @endif
                 </div>

@@ -5,13 +5,13 @@
         <div class="container-fluid">
             <div class="main-contain">
                 <div>
-                    <h1 class="m-0">Smart<span>Exam</span></h1>
-                    <h3 class="m-0">The <span>BEST TEST</span> for students and professor</h3>
+                    <h1 class="m-0"> @lang('student.site.exam') <span> @lang('student.site.smart')</span></h1>
+                    <h3 class="m-0"><span>@lang('student.site.the_best_test')</span> @lang('student.site.for_students_and_professors')</h3>
                     <img src="{{ asset('assets_web/images/landing-page/text.png') }}" alt="" class="img-fluid">
                         <div class="mt-4">
-                            <a href="{{ url('/login') }}" class="btn btn-primary m-0 d-inline-block">Login</a>
-                            <a href="{{ route('student.register.view') }}" class="btn btn-secondary d-inline-block ml-3">Register As Student</a>
-                            <a href="{{ route('professor.register.view') }}" style="width: 217px; !important" class="btn btn-secondary d-inline-block ml-3">Register As Professor</a>
+                            <a href="{{ route('login.view') }}" class="btn btn-primary m-0 d-inline-block">@lang('student.site.login')</a>
+                            <a href="{{ route('student.register.view') }}" class="btn btn-secondary d-inline-block ml-3">@lang('student.site.register_as_student')</a>
+                            <a href="{{ route('professor.register.view') }}" style="width: 217px; !important" class="btn btn-secondary d-inline-block ml-3">@lang('student.site.register_as_professor')</a>
                         </div>   
                 </div>
             </div>
