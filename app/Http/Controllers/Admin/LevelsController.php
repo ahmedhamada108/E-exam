@@ -47,8 +47,8 @@ class LevelsController extends Controller
             'name_en'=>'required',
         ]);
         levels::create($data);
-        session()->flash('success','the level has been added');
-        return redirect('admin/levels');
+        session()->flash('success',__('panel.levels.the_level_has_been_added'));
+        return redirect()->route('levels.index');
     }
 
     /**
@@ -79,7 +79,7 @@ class LevelsController extends Controller
         ]);
 
         $level->update($data);
-        session()->flash('success','this item has been edited');
+        session()->flash('success',__('panel.levels.this_level_has_been_edited'));
         return redirect()->route('levels.index');
         
     }
@@ -93,7 +93,7 @@ class LevelsController extends Controller
     public function destroy(levels $level)
     {
         $level->delete();
-        session()->flash('success','this item has been deleted');
+        session()->flash('success',__('panel.levels.this_level_has_been_deleted'));
         return redirect()->route('levels.index');
     }
 }

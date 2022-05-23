@@ -99,7 +99,7 @@ class SubjectsController extends Controller
             $data['subject_image']='/storage/Subject_images/'.$img_name;
                 // end save image file
             subjects::create($data);
-            session()->flash('success','the subject has been added');
+            session()->flash('success',__('panel.subjects.the_subject_has_been_added'));
             return redirect()->route('subjects.index');
         }   
     }
@@ -160,7 +160,7 @@ class SubjectsController extends Controller
         }else{
             subjects::find($id)->update($data);
         }
-        session()->flash('success','this item has been edited');
+        session()->flash('success',__('panel.subjects.this_subject_has_been_edited'));
         return redirect()->route('subjects.index');
     }
 
@@ -177,7 +177,7 @@ class SubjectsController extends Controller
         File::delete(storage_path('app/public/Subject_images/'.$image));
         // delete image from the storage path
         subjects::find($id)->delete();
-        session()->flash('success','this item has been deleted');
+        session()->flash('success',__('panel.subjects.this_subject_has_been_deleted'));
         return redirect()->route('subjects.index');
     }
 }

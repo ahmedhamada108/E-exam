@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Subjects List</h1>
+            <h1>@lang('panel.subjects.subjects_list')</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Table</li>
+              <li class="breadcrumb-item"><a href="#">@lang('panel.subjects.home')</a></li>
+              <li class="breadcrumb-item active">@lang('panel.subjects.table')</li>
             </ol>
           </div>
         </div>
@@ -31,15 +31,15 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a class="btn btn-success mb-4 text-bold" href="{{route('subjects.create')}}">Add New + </a>
+                <a class="btn btn-success mb-4 text-bold" href="{{route('subjects.create')}}">@lang('panel.subjects.add_new') + </a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>level name</th>
-                    <th>department name</th>
-                    <th>Actions</th>
+                    <th>@lang('panel.subjects.id')</th>
+                    <th>@lang('panel.subjects.name')</th>
+                    <th>@lang('panel.subjects.level_name')</th>
+                    <th>@lang('panel.subjects.department_name')</th>
+                    <th>@lang('panel.subjects.actions')</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -56,17 +56,17 @@
                     {{-- access to the departmnets object from the subject table --}}
                     <td>
                       <div class="btn-group">
-                        <button type="button" class="btn btn-info">Action</button>
+                        <button type="button" class="btn btn-info">@lang('panel.subjects.actions')</button>
                         <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                         <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu" role="menu" style="">
-                        <a class="dropdown-item" href="{{ route('chapters.index', $subject->id ) }}">Chapters</a>
-                        <a class="dropdown-item" href="{{ route('subjects.edit', $subject->id ) }}">Edit</a>
+                        <a class="dropdown-item" href="{{ route('chapters.index', $subject->id ) }}">@lang('panel.subjects.chapters')</a>
+                        <a class="dropdown-item" href="{{ route('subjects.edit', $subject->id ) }}">@lang('panel.subjects.edit')</a>
                         <form method="post" action="{{ route('subjects.destroy',$subject->id) }}">
                           @method('delete')
                           @csrf
-                          <button class="dropdown-item">Delete</button>
+                          <button class="dropdown-item">@lang('panel.subjects.delete')</button>
                         </form>
                         </div>
                         </div>

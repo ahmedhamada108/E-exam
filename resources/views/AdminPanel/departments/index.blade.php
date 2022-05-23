@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>departments List</h1>
+            <h1>@lang('panel.departments.departments_list')</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Table</li>
+              <li class="breadcrumb-item"><a href="#">@lang('panel.departments.home')</a></li>
+              <li class="breadcrumb-item active">@lang('panel.departments.table')</li>
             </ol>
           </div>
         </div>
@@ -31,13 +31,13 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a class="btn btn-success mb-4 text-bold" href="{{route('departments.create')}}">Add New + </a>
+                <a class="btn btn-success mb-4 text-bold" href="{{route('departments.create')}}">@lang('panel.departments.add_new') + </a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Actions</th>
+                    <th>@lang('panel.departments.id')</th>
+                    <th>@lang('panel.departments.name')</th>
+                    <th>@lang('panel.departments.actions')</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -46,11 +46,11 @@
                     <td>{{ $department->id}}</td>
                     <td>{{ $department->name}}</td> 
                     <td>
-                        <a style="float: left;" class="btn btn-primary" href="{{ route('departments.edit', $department->id ) }}">Edit</a>
+                        <a style="float: left;" class="btn btn-primary" href="{{ route('departments.edit', $department->id ) }}">@lang('panel.departments.edit')</a>
                         <form method="post" action="{{ route('departments.destroy',$department->id) }}">
                             @method('delete')
                             @csrf
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger">@lang('panel.departments.delete')</button>
                         </form>
                     </td>
                   </tr>

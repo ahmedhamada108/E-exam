@@ -35,11 +35,9 @@
                             </div>
                         @endif
                         {{-- handle not exists exam for this subject     --}}
-
                         @if(
-                        $opening_exam->count() >=1 &&
-                        \Carbon\Carbon::parse($opening_exam[0]->start_at)->timestamp <= \Carbon\Carbon::now()->timestamp &&
-                        \Carbon\Carbon::parse($opening_exam[0]->end_at)->timestamp >= \Carbon\Carbon::now()->timestamp
+                        $opening_exam->count() >=1 and
+                        $opening_exam[0]->start_at <= \Carbon\Carbon::now()->timestamp 
                         ) 
                             @foreach($opening_exam as $exam_check)
                                 <div class="card-footer">
@@ -49,20 +47,20 @@
                         @endif
                         {{-- handle the exam is opening --}}
                         
-                        @if($pending_exam->count() >= 1 &&
+                        @if($pending_exam->count() == 1 &&
                         \Carbon\Carbon::parse($pending_exam[0]->end_at)->timestamp <= \Carbon\Carbon::now()->timestamp
                         )
                             <div class="card-footer">
-                                <a class="start" href="#">@lang('student.subjects.There_is_no_exam_for_this_subject')</a>
+                                <a class="start" href="#">@lang('student.subjects.There_is_no_exam_for_this_subject') finish</a>
                             </div>
                         @endif
                         {{-- handle the exam is finished --}}
 
-                        @if($pending_exam->count() >= 1 &&
-                        \Carbon\Carbon::parse($pending_exam[0]->start_at)->timestamp >= \Carbon\Carbon::now()->timestamp
-                        )
+                        @if($pending_exam->count() == 1 &&
+                        $pending_exam[0]->start_at >= \Carbon\Carbon::now()->timestamp
+                        ){{ $pending_exam->count() }}
                             <div class="card-footer">
-                                <a class="start" href="#">@lang('student.subjects.Will_start_in'): <br>{{\Carbon\Carbon::parse($pending_exam[0]->start_at)->isoFormat('D MMMM YYYY, h:mm a')}}</a>
+                                <a class="start" href="#">@lang('student.subjects.Will_start_in'): <br>{{date("Y-m-d g:i A",$pending_exam[0]->start_at)}}</a>
                             </div>
                         @endif
                         {{-- handle the exam is comming --}}

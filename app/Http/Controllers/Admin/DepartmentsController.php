@@ -46,7 +46,7 @@ class DepartmentsController extends Controller
             'name_en'=>'required',
         ]);
         departments::create($data);
-        session()->flash('success','the department has been added');
+        session()->flash('success',__('panel.departments.the_department_has_been_added'));
         return redirect()->route('departments.index');
     }
 
@@ -76,7 +76,7 @@ class DepartmentsController extends Controller
             'name_en'=>'required'
         ]);
         departments::find($id)->update($data);
-        session()->flash('success','this item has been edited');
+        session()->flash('success',__('panel.departments.this_department_has_been_edited'));
         return redirect()->route('departments.index');
     }
 
@@ -89,7 +89,7 @@ class DepartmentsController extends Controller
     public function destroy($id)
     {
         departments::destroy($id);
-        session()->flash('success','this item has been deleted');
+        session()->flash('success',__('panel.departments.this_department_has_been_deleted'));
         return redirect()->route('departments.index');
     }
 }

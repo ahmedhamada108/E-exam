@@ -10,14 +10,14 @@
                 @include('layouts.sessions_messages')
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                    <h1>MCQ Question</h1>
+                    <h1>@lang('panel.questions.mcq_questions')</h1>
                     </div>
                     <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('chapters.index',[$subject_id] ) }}">Chapters</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('questions.index',[$subject_id,$chapter_id] ) }}">Questions</a></li>
-                        <li class="breadcrumb-item active">MCQ Question</li>
+                        <li class="breadcrumb-item"><a href="#">@lang('panel.questions.home')</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('chapters.index',[$subject_id] ) }}">@lang('panel.questions.chapters')</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('questions.index',[$subject_id,$chapter_id] ) }}">@lang('panel.questions.questions')</a></li>
+                        <li class="breadcrumb-item active">@lang('panel.questions.mcq_questions')</li>
                     </ol>
                     </div>
                 </div>
@@ -30,28 +30,28 @@
                 <!-- SELECT2 EXAMPLE -->
                 <div class="card card-default">
                     <div class="card-header bg-success">
-                        <h3 class="card-title">Add New Question</h3>
+                        <h3 class="card-title">@lang('panel.questions.add_new_question')</h3>
                     </div>
                     <!-- /.card-header -->
                     <form action="{{ route('questions.store',[$subject_id,$chapter_id]) }}" method="post">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Question Name:</label>
+                                <label for="exampleInputEmail1">@lang('panel.questions.questions_name'):</label>
                                 <input value="{{ old('question_name') }}" type="text" name="question_name" class="form-control" id="exampleInputEmail1" placeholder="Enter Question">
                                 <span id="exampleInputEmail1" style="padding: 4px;color: #ff0000ad;position: absolute;" class="feedback">
-                                    Please Determine The Correct Answer By The Check Button
+                                    @lang('panel.questions.Please_Determine_The_Correct_Answer_By_The_Check_Button')
                                 </span>
                             </div><br>
                             <div class="form-group">
-                                <label>Is the question is true & false or multi choices?</label>
+                                <label>@lang('panel.questions.Is_the_question_is_true_&_false_or_multi_choices')?</label>
                                 <select id="trueOrfalse" name="Is_TrueFalse" class="form-control">
-                                    <option value="1" selected>True & False</option>
-                                    <option value="0">Multi Choices</option>
+                                    <option value="1" selected>@lang('panel.questions.true_&_false')</option>
+                                    <option value="0">@lang('panel.questions.multi_choices')</option>
                                   </select>
                             </div>
                             <!-- /.form-group -->
-                            <label class="mt-3">Add Answers:</label>
+                            <label class="mt-3">@lang('panel.questions.add_answers'):</label>
 
                             <div class="input-group d-flex align-items-center mb-2">
                                 <strong class="mr-2">A: </strong>
@@ -97,7 +97,7 @@
                             </div>
                             <!-- /options-group -->
                             <div class="form-group">
-                                <label>Select Models</label>
+                                <label>@lang('panel.questions.select_models')</label>
                                 <select name="model_type_id" class="form-control select2" style="width: 100%;">
                                     <option value="1">A</option>
                                     <option value="2">B</option>
@@ -108,7 +108,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">@lang('panel.questions.submit')</button>
                         </div>
                     </form>
 

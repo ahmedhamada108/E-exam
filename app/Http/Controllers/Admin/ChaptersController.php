@@ -67,10 +67,10 @@ class ChaptersController extends Controller
         chapters::create($data);
 
         if(auth('admin')->id() == null){
-            session()->flash('success','the chapter has been added');
+            session()->flash('success',__('panel.chapters.the_chapter_has_been_added'));
             return redirect()->route('professor.chapters.index',$subject_id);  
         }else{
-            session()->flash('success','the chapter has been added');
+            session()->flash('success',__('panel.chapters.the_chapter_has_been_added'));
             return redirect()->route('chapters.index',$subject_id);
         }
 
@@ -113,7 +113,7 @@ class ChaptersController extends Controller
             session()->flash('success','this item has been edited');
             return redirect()->route('professor.chapters.index',$subject_id);
         }else{
-            session()->flash('success','this item has been edited');
+            session()->flash('success',__('panel.chapters.this_chapter_has_been_edited'));
             return redirect()->route('chapters.index',$subject_id);
         }
 
@@ -130,10 +130,10 @@ class ChaptersController extends Controller
         chapters::destroy($id);
 
         if(auth('admin')->id() == null){
-            session()->flash('success','this item has been deleted');
+            session()->flash('success',__('panel.chapters.this_chapter_has_been_deleted'));
             return redirect()->route('professor.chapters.index',$subject_id);  
         }else{
-            session()->flash('success','this item has been deleted');
+            session()->flash('success',__('panel.chapters.this_chapter_has_been_deleted'));
             return redirect()->route('chapters.index',$subject_id);
         }
     }

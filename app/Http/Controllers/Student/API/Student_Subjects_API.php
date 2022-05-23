@@ -52,7 +52,10 @@ class Student_Subjects_API extends BaseController
         try{
             if(auth('student_api')->id() != null){
                 if(isset($request->subject_id)){
-                    $check_exists_exam =exam::where('subject_id',$request->subject_id)->
+                    $check_exists_exam =exam::where([
+                        ['subject_id',$request->subject_id],
+                        ['Is_available','=',1]
+                        ])->
                     get([
                         'id',
                         'exam_name',

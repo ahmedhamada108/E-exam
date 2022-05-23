@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1>departments</h1>
+                <h1>@lang('panel.departments.departments')</h1>
                 </div>
                 <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">departments</li>
+                    <li class="breadcrumb-item"><a href="#">@lang('panel.departments.home')</a></li>
+                    <li class="breadcrumb-item active">@lang('panel.departments.departments')</li>
                 </ol>
                 </div>
             </div>
@@ -27,22 +27,22 @@
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default">
                 <div class="card-header bg-success">
-                    <h3 class="card-title">Add New department</h3>
+                    <h3 class="card-title">@lang('panel.departments.add_new_department')</h3>
                 </div>
                 <!-- /.card-header -->
                 <form action="{{ route('departments.store') }}" method="post" >
                     @csrf
                     <div class="card-body">  
                         <div class="form-group">
-                        <label for="exampleInputEmail1" class="form-label">name AR</label>
+                        <label for="exampleInputEmail1" class="form-label">@lang('panel.departments.name_ar')</label>
                         <input value="{{ old('name_ar') }}" type="text" name="name_ar" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1" class="form-label">name EN</label>
+                            <label for="exampleInputEmail1" class="form-label">@lang('panel.departments.name_en')</label>
                             <input value="{{ old('name_en') }}" type="text" name="name_en" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">@lang('panel.departments.submit')</button>
                         </div>
                     </div>    
                   </form>

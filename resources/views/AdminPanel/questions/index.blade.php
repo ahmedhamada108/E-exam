@@ -8,13 +8,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Questions List</h1>
+            <h1>@lang('panel.questions.questions_list')</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('chapters.index',[$subject_id] ) }}">Chapters</a></li>
-              <li class="breadcrumb-item active">Table</li>
+              <li class="breadcrumb-item"><a href="#">@lang('panel.questions.home')</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('chapters.index',[$subject_id] ) }}">@lang('panel.questions.chapters')</a></li>
+              <li class="breadcrumb-item active">@lang('panel.questions.table')</li>
             </ol>
           </div>
         </div>
@@ -32,15 +32,15 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a class="btn btn-success mb-4 text-bold" href="{{ route('questions.create',[$subject_id,$chapter_id]) }}">Add New Question +</a>
+                <a class="btn btn-success mb-4 text-bold" href="{{ route('questions.create',[$subject_id,$chapter_id]) }}">@lang('panel.questions.add_new_question') +</a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Id</th>
-                    <th>Questions</th>
-                    <th>Type</th>
-                    <th>Model</th>
-                    <th>Actions</th>
+                    <th>@lang('panel.questions.id')</th>
+                    <th>@lang('panel.questions.questions')</th>
+                    <th>@lang('panel.questions.type')</th>
+                    <th>@lang('panel.questions.model')</th>
+                    <th>@lang('panel.questions.actions')</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -49,25 +49,24 @@
                     <td>{{ $question->id}}</td>
                     <td>{{ $question->question_name}}</td>
                   @if($question->Is_TrueFalse==0)
-                  <td>Multi Choices</td>
+                  <td>@lang('panel.questions.multi_choices')</td>
                   @else  
-                    <td>True & False</td>
+                    <td>@lang('panel.questions.true_&_false')</td>
                   @endif  
                         @foreach($question['model_type'] as $question_model)
                             <td>{{ $question_model->type}}</td>
                         @endforeach
                     <td id="{{ $question->id }}">
                       <div class="btn-group">
-                        <button type="button" class="btn btn-info">Action</button>
+                        <button type="button" class="btn btn-info">@lang('panel.questions.actions')</button>
                         <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                         <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu" role="menu" style="">
-                        <a class="dropdown-item" href="{{ route('questions.edit',[$subject_id,$chapter_id,$question->id]) }}">Edit</a>
                         <form method="post" action="{{ route('chapters.destroy',[$subject_id,$question->id]) }}">
                           @method('delete')
                           @csrf
-                          <button class="dropdown-item">Delete</button>
+                          <button class="dropdown-item">@lang('panel.questions.delete')</button>
                         </form>
                         </div>
                         </div>
