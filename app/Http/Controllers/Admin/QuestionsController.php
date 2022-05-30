@@ -130,39 +130,23 @@ class QuestionsController extends Controller
     public function update(Request $request, $id,$subject_id,$chapter_id)
     {
         $data = $request->validate([
-            'question_name'=>['required', Rule::unique('mcq')->ignore($id)],
+            'question_name'=>'required',
             'model_type_id'=> 'required',
-            'answer'=>'required',
             'correct_answer'=>'required',
-            'Is_TrueFalse'=>'required'
         ]); // end validate the data
         $data += [
             'subject_id'=>$subject_id,
             'chapter_id'=>$chapter_id
         ];// end adding the subject and chapter IDs
-        
-        $Is_TrueFalse = $request->Is_TrueFalse;
-        switch ($Is_TrueFalse) {
-
-            case (0):
-                $question= mcq::find($id);
-                $question->update($data);
-                $question_id = $question->id;
-
-                foreach ($request['answer'] as $answer) {
-                    $answer= answer::where('mcq_id',$question_id)->get();
-                    $answer->update([
-                    'mcq_id'=> $question_id,
-                    'answer'=> $answer
-                 ]);
-                }
-                break; 
-                // end the is multi choices case 
-            case(1):
-                $question= mcq::find($id);
-                $question->update($data);
-                break;
-                // end the is true & false case
+        $question= mcq::find($id);
+        $question->update($data);
+        $question_id = $question->id;
+        foreach ($request['answer'] as $answer) {
+            $answer_finder= answer::where('mcq_id',$question_id)->first();
+            $answer_finder->update([
+            'mcq_id'=> $question_id,
+            'answer'=> $answer
+         ]);
         }
         if(auth('admin')->id() == null){
             session()->flash('success','the item has been added');
@@ -179,8 +163,15 @@ class QuestionsController extends Controller
      * @param  \App\Models\mcq  $questions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(mcq $questions)
+    public function destroy($subject_id,$chapter_id,$id)
     {
-        return redirect()->route('questions.index');
+        mcq::destroy($id);
+        if(auth('admin')->id() == null){
+            session()->flash('success',__('panel.questions.this_question_has_been_deleted'));
+            return redirect()->route('professor.questions.index',[$subject_id,$chapter_id]);  
+        }else{
+            session()->flash('success',__('panel.questions.this_question_has_been_deleted'));
+            return redirect()->route('questions.index',[$subject_id,$chapter_id]);
+        }
     }
 }

@@ -72,29 +72,24 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="sbout.html">@lang('student.header.about_us')</a>
                                         </li>  
-                                        @auth('admin')
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('logout') }}">@lang('student.header.logout')</a>
-                                            </li>
-                                        @endauth
-                                        @auth('professor')
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('logout.prof') }}">@lang('student.header.logout')</a>
-                                            </li>
-                                        @endauth
                                         @auth('student')
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{{ route('logout.student') }}">@lang('student.header.logout')</a>
                                             </li>
                                         @endauth
-                                        @foreach(LaravelLocalization::getSupportedLocales('hideDefaultLocaleInURL = true') as $localeCode => $properties)
-                                        <li>
-                                            <a class="nav-link" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                    </ul>
+                                    <div class="dropdown">
+                                        <a class=" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
+                                            @lang('student.header.languages')
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                          @foreach(LaravelLocalization::getSupportedLocales('hideDefaultLocaleInURL = true') as $localeCode => $properties)
+                                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                                 {{ $properties['native'] }}
                                             </a>
-                                        </li>
                                         @endforeach
-                                    </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </nav>
                         </div>
@@ -114,7 +109,7 @@
             <div class="row mr-0 ml-0">
 
                 <div class="info col-12 col-lg-5 mb-5">
-                    <h2 class="h1 mb-3">@lang('student.header.smart')<span>@lang('student.header.exam')</span></h2>
+                    <h2 class="h1 mb-3">@lang('student.site.exam') <span> @lang('student.site.smart')</span></h2>
                         <p> 
                            lorem ipsum dolor sit alermet, consecuter adpesighing elit,sed do eusmod  tempor incidintal ut lubor et dolor e manage aliqui . 
                             lorem ipsum dolor sit alermet, consecuter adpesighing elit,sed do eusmod  tempor incidintal ut lubor et dolor e manage aliqui .

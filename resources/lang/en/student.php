@@ -18,6 +18,7 @@ return [
         'subjects'=>'subjects',
         'my_account'=>'My account',
         'about_us'=>'about us',
+        'languages'=> 'Languages',
         'logout'=>'logout'
     ],
     'subjects'=>[

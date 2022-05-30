@@ -20,6 +20,6 @@ class student_grade extends Model
         return $this->hasOne(exam::class,'id','exam_id');
     }
     public function student(){
-        return $this->hasOne(students::class,'id','student');
+        return $this->hasOne(students::class,'id','student_id');
     }
 }

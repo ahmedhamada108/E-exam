@@ -22,15 +22,19 @@ class AccountController extends BaseController
                 'subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as subject_name')->get();
         }])->get();
         //  return $student_exams;  
+        $get_rank= student_grade::orderByRaw('student_grade', 'DESC')->where([
+            ['exam_id',7]
+        ])->get();
+        
         return view('StudentPanel.account',compact(['student_exams']));
     }
 
     public function exam_view($exam_id){
 
         $if_exam_exists= exam::where([
-            ['id',$exam_id],
-            ['Is_available',0],
-            ['start_at','>=', Carbon::now()->timestamp]
+            ['id','=',$exam_id],
+            ['Is_available','=',1],
+            ['end_at','>=', Carbon::now()->timestamp]
             ])->count();
         if($if_exam_exists == 0) // check if this exam is expired or not
         {

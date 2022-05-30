@@ -58,7 +58,7 @@
 
                         @if($pending_exam->count() == 1 &&
                         $pending_exam[0]->start_at >= \Carbon\Carbon::now()->timestamp
-                        ){{ $pending_exam->count() }}
+                        )
                             <div class="card-footer">
                                 <a class="start" href="#">@lang('student.subjects.Will_start_in'): <br>{{date("Y-m-d g:i A",$pending_exam[0]->start_at)}}</a>
                             </div>

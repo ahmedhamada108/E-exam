@@ -24,11 +24,11 @@ class Auth extends BaseController
     {
         $levels= levels::select(
             'id',
-            'name_'.LaravelLocalization::getCurrentLocale().' as name',
+            'name_'.LaravelLocalization::getCurrentLocale().' as name'
         )->get();
         $departments= departments::select(
             'id',
-            'name_'.LaravelLocalization::getCurrentLocale().' as name',
+            'name_'.LaravelLocalization::getCurrentLocale().' as name'
         )->get();
         return view('StudentPanel.register',compact(['levels','departments']));
     }
@@ -51,7 +51,7 @@ class Auth extends BaseController
     }
 
     public function dashboard_view(){
-        return view('Studentpanel.dashboard');
+        return view('StudentPanel.dashboard');
     }
 
     public function logout()

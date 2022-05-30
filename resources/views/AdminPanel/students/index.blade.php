@@ -55,6 +55,7 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                   </thead>
@@ -64,6 +65,11 @@
                     <td>{{ $student->id}}</td>
                     <td>{{ $student->name}}</td> 
                     <td>{{ $student->email}}</td> 
+                    @if($student->Is_active==1)
+                      <td>Accepted</td>
+                    @else 
+                      <td>Pending</td>
+                    @endif
                     <td>
                         <a style="float: left;" class="btn btn-primary" href="{{ route('students.edit', $student->id ) }}">Edit</a>
                         <form method="post" action="{{ route('students.destroy',$student->id) }}">

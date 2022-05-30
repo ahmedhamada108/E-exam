@@ -20,6 +20,9 @@ class student_exam extends Model
     public function exam_id(){
         return $this->hasOne(exam::class,'id','exam_id');
     }
+    public function exam(){
+        return $this->hasOne(exam::class,'id','exam_id');
+    }
     public function mcq(){
         return $this->hasone(mcq::class,'id','mcq_id');
     }

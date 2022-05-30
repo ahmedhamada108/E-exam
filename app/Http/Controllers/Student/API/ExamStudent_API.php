@@ -51,9 +51,9 @@ class ExamStudent_API extends BaseController
         
                     foreach ($exam_structure as $exam) {
                         $questions= mcq::select('id', 'question_name','correct_answer', 'subject_id', 'model_type_id', 'chapter_id')->where([
-                                ['subject_id',$exam['exam']->subject_id],
-                                ['chapter_id',$exam->chapter_id]
-                                ])->with(
+                            ['exam_id','=',$request->exam_id],
+                            ['student_id','=',auth('student_api')->id()]
+                            ])->with(
                                     ['subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as subject_name',
                                     'model_type:id,type']
                                 )->inRandomOrder()

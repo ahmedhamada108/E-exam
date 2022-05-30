@@ -45,4 +45,10 @@ class students extends Authenticatable implements JWTSubject
     public function department(){
         return $this->hasOne(departments::class,'id','dept_id');
     }
+    public function getRanking(){
+        $collection = collect(student_grade::orderBy('student_grade', 'DESC')->get());
+        $data       = $collection->where('student_id', $this->id);
+        $value      = $data->keys()->first() + 1;
+        return $value;
+     }
 }

@@ -34,9 +34,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => ['web
         'Admin\QuestionsController',
         ['as'=>'professor'])->except('show');
 
+        Route::resource('exams','Admin\ExamController',['as'=>'professor'])->except('show');
+        Route::resource('exams/{exam_id?}/exam_structure','Admin\Exam_StructureController',['as'=>'professor'])->except('show');
+
 
         Route::resource('students','Admin\StudentsController',['as'=>'professor'])->except('show');
-        
+        Route::get('exam/{exam_id?}/students_grades','Admin\StudentsGradesController@StudentsGrades')->name('professor.studnets.grades');
+
     });// end admin routes group
 
 

@@ -21,11 +21,11 @@ class AuthAPI extends BaseController
     {
         $levels = levels::select(
             'id',
-            'name_' . app()->getLocale() . ' as name',
+            'name_' . app()->getLocale() . ' as name'
         )->get();
         $departments = departments::select(
             'id',
-            'name_' . app()->getLocale() . ' as name',
+            'name_' . app()->getLocale() . ' as name'
         )->get();
 
         return response()->json([

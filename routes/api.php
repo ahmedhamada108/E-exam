@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\departments;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -40,3 +41,4 @@ Route::group(['prefix'=>'student','namespace'=>'Student\API','middleware'=>['cha
     });
 
 });
+

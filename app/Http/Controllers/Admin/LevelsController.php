@@ -19,7 +19,7 @@ class LevelsController extends Controller
     {
         $levels= levels::select(
             'id',
-            'name_'.LaravelLocalization::getCurrentLocale().' as name',
+            'name_'.LaravelLocalization::getCurrentLocale().' as name'
         )->get();
         return view('AdminPanel.levels.index',compact('levels'));
     }

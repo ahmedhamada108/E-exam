@@ -63,7 +63,8 @@
                         <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu" role="menu" style="">
-                        <form method="post" action="{{ route('chapters.destroy',[$subject_id,$question->id]) }}">
+                          <a href="{{ route('questions.edit',[$subject_id,$chapter_id,$question->id]) }}" class="dropdown-item">@lang('panel.questions.edit')</a>
+                        <form method="post" action="{{ route('questions.destroy',[$subject_id,$chapter_id,$question->id]) }}">
                           @method('delete')
                           @csrf
                           <button class="dropdown-item">@lang('panel.questions.delete')</button>

@@ -53,7 +53,7 @@ class ExamStudentController extends BaseController
                 //end storing the question to the student question table
 
                 $questions_exam = student_exam::where('exam_id',$exam_id)->
-                with(['exam_id','mcq'])->get();
+                with(['exam','mcq'])->get();
                 // end the return questions
             }
         }else{
@@ -71,14 +71,14 @@ class ExamStudentController extends BaseController
 
         $If_check_submitted= student_grade::where([
             ['exam_id',$exam_id],
-            ['student_id',auth('student')->id]
+            ['student_id',auth('student')->id()]
             ])->count();
             // check if the exam is submitted before or not
 
         $if_exam_available= exam::where([
             ['id',$exam_id],
-            ['Is_available',0],
-            ['start_at','>=', Carbon::now()->timestamp]
+            ['Is_available',1],
+            ['start_at','<=', Carbon::now()->timestamp]
             ])->count();
         // check if the exam is expired or not 
         if($If_check_submitted ==0){

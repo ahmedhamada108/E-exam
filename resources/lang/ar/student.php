@@ -18,6 +18,7 @@ return [
         'subjects'=>'المواد',
         'my_account'=>'حسابي',
         'about_us'=>'عنا',
+        'languages'=> 'اللغات',
         'logout'=>'تسجيل خروج'
     ],
     'subjects'=>[

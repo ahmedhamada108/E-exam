@@ -53,8 +53,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'namespace'=>'Admin',
 
         Route::resource('students','StudentsController')->except('show');
 
-
-        Route::get('test','testController@test');
+        Route::get('exam/{exam_id?}/students_grades','StudentsGradesController@StudentsGrades')->name('studnets.grades');
 
     });// end admin routes group
 

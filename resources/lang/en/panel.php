@@ -127,6 +127,7 @@ return [
         'model'=>'Model',
         'actions'=>'Actions',
         'delete'=>'Delete',
+        'edit'=>'Edit',
         'home'=>'Home',
         'table'=>'Table',
         'mcq_questions'=>'MCQ Questions',

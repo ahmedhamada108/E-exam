@@ -168,6 +168,16 @@
             </a>
           </li>
           @endauth
+          @auth('professor')
+          <li class="nav-item">
+            <a href="{{ route('professor.exams.index') }}" class="nav-link {{ request()->segment(2) == 'exams' ? 'active' : ''  }}">
+              <i class="nav-icon fas fa-scroll"></i>
+              <p>
+                @lang('panel.side_menue.exams')
+              </p>
+            </a>
+          </li>
+          @endauth
           @auth('admin')
           <li class="nav-item">
             <a href="{{ route('professors.index') }}" class="nav-link {{ request()->segment(2) == 'professors' ? 'active' : ''  }}">

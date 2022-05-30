@@ -20,16 +20,29 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $exams = exam::select([
-            'id',
-            'exam_name',
-            'subject_id',
-            'prof_id'
-            ])->with([
-            'subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as name',
-            'professors:id,name'
-            ])->get();
-        return view('AdminPanel.exams.index',compact(['exams']));
+            if(auth('admin')->id() == null){
+                $exams = exam::select([
+                    'id',
+                    'exam_name',
+                    'subject_id',
+                    'prof_id'
+                    ])->where('prof_id',auth('professor')->id())->with([
+                    'subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as name',
+                    'professors:id,name'
+                    ])->get();
+                return view('ProfessorPanel.exams.index',compact(['exams']));
+            }else{
+                $exams = exam::select([
+                    'id',
+                    'exam_name',
+                    'subject_id',
+                    'prof_id'
+                    ])->with([
+                    'subjects:id,name_'.LaravelLocalization::getCurrentLocale().' as name',
+                    'professors:id,name'
+                    ])->get();
+                return view('AdminPanel.exams.index',compact(['exams']));
+            }
     }
 
     /**
@@ -39,12 +52,24 @@ class ExamController extends Controller
      */
     public function create()
     {
-        $subjects= subjects::select([
-            'id',
-            'name_'.LaravelLocalization::getCurrentLocale().' as name'
-            ])->get();
-        $professors = professors::select('id','name')->get();
-        return view('AdminPanel.exams.create',compact(['subjects','professors']));
+        
+        if(auth('admin')->id() == null){
+            $subjects= subjects::select([
+                'id',
+                'name_'.LaravelLocalization::getCurrentLocale().' as name',
+                'prof_id'
+                ])->where('prof_id',auth('professor')->id())->get();
+            return view('ProfessorPanel.exams.create',compact(['subjects']));
+        }else{
+            $subjects= subjects::select([
+                'id',
+                'name_'.LaravelLocalization::getCurrentLocale().' as name',
+                'prof_id'
+                ])->get();
+            $professors = professors::select('id','name')->get();
+            return view('AdminPanel.exams.create',compact(['subjects','professors']));
+
+        }
     }
 
     /**
@@ -55,19 +80,36 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'exam_name'=>'required| unique:exams,exam_name',
-            'subject_id'=>'required',
-            'prof_id'=>'required',
-        ]);
-        $data+=[
-            'duration'=> $request->end_at,
-            'start_at'=> Carbon::parse($request->start_at)->timestamp,
-            'end_at'=> Carbon::parse($request->start_at)->addMinutes($request->end_at)->timestamp
-        ];
-        exam::create($data);
-        session()->flash('success','the exam has been added');
-        return redirect()->route('exams.index');
+        if(auth('admin')->id() == null){
+            $data = $request->validate([
+                'exam_name'=>'required| unique:exams,exam_name',
+                'subject_id'=>'required',
+            ]);
+            $data+=[
+                'prof_id'=> auth('professor')->id(),
+                'duration'=> $request->end_at,
+                'start_at'=> Carbon::parse($request->start_at)->timestamp,
+                'end_at'=> Carbon::parse($request->start_at)->addMinutes($request->end_at)->timestamp
+            ];
+            exam::create($data);
+            session()->flash('success','the exam has been added');
+            return redirect()->route('professor.exams.index');
+        }else{
+            $data = $request->validate([
+                'exam_name'=>'required| unique:exams,exam_name',
+                'subject_id'=>'required',
+                'prof_id'=>'required',
+            ]);
+            $data+=[
+                'duration'=> $request->end_at,
+                'start_at'=> Carbon::parse($request->start_at)->timestamp,
+                'end_at'=> Carbon::parse($request->start_at)->addMinutes($request->end_at)->timestamp
+            ];
+            exam::create($data);
+            session()->flash('success','the exam has been added');
+            return redirect()->route('exams.index');
+        }
+
     }
 
     /**
@@ -78,13 +120,24 @@ class ExamController extends Controller
      */
     public function edit(exam $exam)
     {
-        $exam= exam::find($exam->id);
-        $subjects= subjects::select([
-            'id',
-            'name_'.LaravelLocalization::getCurrentLocale().' as name',
-            ])->get();
-        $professors = professors::select('id','name')->get();
-        return view('AdminPanel.exams.show',compact(['exam','subjects','professors']));
+        if(auth('admin')->id() == null){
+            $exam= exam::find($exam->id);
+            $subjects= subjects::select([
+                'id',
+                'name_'.LaravelLocalization::getCurrentLocale().' as name',
+                'prof_id'
+                ])->where('prof_id',auth('professor')->id())->get();
+            return view('ProfessorPanel.exams.show',compact(['exam','subjects']));
+        }else{
+            $exam= exam::find($exam->id);
+            $subjects= subjects::select([
+                'id',
+                'name_'.LaravelLocalization::getCurrentLocale().' as name',
+                'prof_id'
+                ])->get();
+            $professors = professors::select('id','name')->get();
+            return view('AdminPanel.exams.show',compact(['exam','subjects','professors']));
+        }
 
     }
 
@@ -97,19 +150,37 @@ class ExamController extends Controller
      */
     public function update(Request $request, exam $exam)
     {
-        $data = $request->validate([
-            'exam_name'=>['required', Rule::unique('exams')->ignore($exam->id)],
-            'subject_id'=>'required',
-            'prof_id'=>'required',
-        ]);
-        $data+=[
-            'duration'=> $request->end_at,
-            'start_at'=> Carbon::parse($request->start_at)->timestamp,
-            'end_at'=> Carbon::parse($request->start_at)->addMinutes($request->end_at)->timestamp
-        ];
-        exam::find($exam->id)->update($data);
-        session()->flash('success','this item has been edited');
-        return redirect()->route('exams.index');
+        if(auth('admin')->id() == null){
+            $data = $request->validate([
+                'exam_name'=>['required', Rule::unique('exams')->ignore($exam->id)],
+                'subject_id'=>'required',
+            ]);
+            $data+=[
+                'prof_id'=>auth('professor')->id(),
+                'duration'=> $request->end_at,
+                'start_at'=> Carbon::parse($request->start_at)->timestamp,
+                'end_at'=> Carbon::parse($request->start_at)->addMinutes($request->end_at)->timestamp
+            ];
+            exam::find($exam->id)->update($data);
+            session()->flash('success','this item has been edited');
+            return redirect()->route('professor.exams.index');
+            
+        }else{
+            $data = $request->validate([
+                'exam_name'=>['required', Rule::unique('exams')->ignore($exam->id)],
+                'subject_id'=>'required',
+                'prof_id'=>'required',
+            ]);
+            $data+=[
+                'duration'=> $request->end_at,
+                'start_at'=> Carbon::parse($request->start_at)->timestamp,
+                'end_at'=> Carbon::parse($request->start_at)->addMinutes($request->end_at)->timestamp
+            ];
+            exam::find($exam->id)->update($data);
+            session()->flash('success','this item has been edited');
+            return redirect()->route('exams.index');
+        }
+
     }
 
     /**
@@ -121,7 +192,12 @@ class ExamController extends Controller
     public function destroy(exam $exam)
     {
         exam::destroy($exam->id);
-        session()->flash('success','this item has been deleted');
-        return redirect()->route('exams.index');
+        if(auth('admin')->id() == null){
+            session()->flash('success','this item has been deleted');
+            return redirect()->route('professor.exams.index');
+        }else{
+            session()->flash('success','this item has been deleted');
+            return redirect()->route('exams.index');
+        }
     }
 }

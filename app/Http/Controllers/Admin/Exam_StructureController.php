@@ -25,7 +25,11 @@ class Exam_StructureController extends Controller
             'model_type:id,type'
             ])->get();
             // return $exam_structures[0]->exam->id;
-             return view('AdminPanel.exam_structure.index',compact(['exam_structures','exam_id']));
+            if(auth('admin')->id() == null){
+                return view('ProfessorPanel.exam_structure.index',compact(['exam_structures','exam_id']));
+            }else{
+                return view('AdminPanel.exam_structure.index',compact(['exam_structures','exam_id']));
+            }
     }
 
     /**
@@ -42,8 +46,11 @@ class Exam_StructureController extends Controller
             'id',
             'name_'.LaravelLocalization::getCurrentLocale().' as name'
             )->where('subject_id',$subject_id)->get();
-
-        return view('AdminPanel.exam_structure.create',compact(['chapters','models_type','subject_id','exam_id']));
+            if(auth('admin')->id() == null){
+                return view('ProfessorPanel.exam_structure.create',compact(['chapters','models_type','subject_id','exam_id']));
+            }else{
+                return view('AdminPanel.exam_structure.create',compact(['chapters','models_type','subject_id','exam_id']));
+            }
     }
 
     /**
@@ -62,8 +69,15 @@ class Exam_StructureController extends Controller
         ]);
         $data['exam_id']=$exam_id;
         exam_structure::create($data);
-        session()->flash('success','the exam structure has been added');
-        return redirect()->route('exam_structure.index',$exam_id);
+
+        if(auth('admin')->id() == null){
+            session()->flash('success','the exam structure has been added');
+            return redirect()->route('professor.exam_structure.index',$exam_id);
+        }else{
+            session()->flash('success','the exam structure has been added');
+            return redirect()->route('exam_structure.index',$exam_id);
+        }
+
     }
 
     /**
@@ -85,7 +99,11 @@ class Exam_StructureController extends Controller
             'id',
             'name_'.LaravelLocalization::getCurrentLocale().' as name'
             )->where('subject_id',$subject_id)->get();   
-        return view('AdminPanel.exam_structure.show',compact(['chapters','exam_structure','models_type','subject_id','exam_id']));
+            if(auth('admin')->id() == null){
+                return view('ProfessorPanel.exam_structure.show',compact(['chapters','exam_structure','models_type','subject_id','exam_id']));
+            }else{
+                return view('AdminPanel.exam_structure.show',compact(['chapters','exam_structure','models_type','subject_id','exam_id']));
+            }
 
     }
 
@@ -107,8 +125,14 @@ class Exam_StructureController extends Controller
         $data['exam_id']=$exam_id;
         $data;
         exam_structure::find($id)->update($data);
-        session()->flash('success','this item has been edited');
-        return redirect()->route('exam_structure.index',$exam_id);
+        if(auth('admin')->id() == null){
+            session()->flash('success','this item has been edited');
+            return redirect()->route('professor.exam_structure.index',$exam_id);
+        }else{
+            session()->flash('success','this item has been edited');
+            return redirect()->route('exam_structure.index',$exam_id);
+        }
+
     }
 
     /**
@@ -120,7 +144,13 @@ class Exam_StructureController extends Controller
     public function destroy($exam_id,$id)
     {
         exam_structure::destroy($id);
-        session()->flash('success','this item has been deleted');
-        return redirect()->route('exam_structure.index',$exam_id);
+        if(auth('admin')->id() == null){
+            session()->flash('success','this item has been deleted');
+            return redirect()->route('professor.exam_structure.index',$exam_id);
+        }else{
+            session()->flash('success','this item has been deleted');
+            return redirect()->route('exam_structure.index',$exam_id);
+        }
+
     }
 }

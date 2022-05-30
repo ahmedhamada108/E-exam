@@ -15,8 +15,8 @@
                     <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">@lang('panel.questions.home')</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('professor.chapters.index',[$subject_id] ) }}">@lang('panel.questions.chapters')</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('professor.questions.index',[$subject_id,$chapter_id] ) }}">@lang('panel.questions.questions')</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('chapters.index',[$subject_id] ) }}">@lang('panel.questions.chapters')</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('questions.index',[$subject_id,$chapter_id] ) }}">@lang('panel.questions.questions')</a></li>
                         <li class="breadcrumb-item active">@lang('panel.questions.mcq_questions')</li>
                     </ol>
                     </div>
@@ -33,7 +33,7 @@
                         <h3 class="card-title">@lang('panel.questions.add_new_question')</h3>
                     </div>
                     <!-- /.card-header -->
-                    <form action="{{ route('professor.questions.update',[$question->id,$subject_id,$chapter_id]) }}" method="post">
+                    <form action="{{ route('questions.update',[$question->id,$subject_id,$chapter_id]) }}" method="post">
                         @csrf
                         <input type="hidden" name="_method" value="put" />
                         <div class="card-body">

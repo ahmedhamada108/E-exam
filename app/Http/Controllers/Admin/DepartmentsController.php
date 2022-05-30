@@ -18,7 +18,7 @@ class DepartmentsController extends Controller
     {
         $departments= departments::select(
             'id',
-            'name_'.LaravelLocalization::getCurrentLocale().' as name',
+            'name_'.LaravelLocalization::getCurrentLocale().' as name'
         )->get();
         return view('AdminPanel.departments.index',compact('departments'));
     }

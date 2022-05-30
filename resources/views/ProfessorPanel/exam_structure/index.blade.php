@@ -8,12 +8,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Exams List</h1>
+            <h1>The Structure of the exam</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Table</li>
+              <li class="breadcrumb-item"><a href="{{ route('professor.exams.index')}}">Exams</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('professor.exam_structure.index',$exam_id) }}">Exam Structure</a></li>
             </ol>
           </div>
         </div>
@@ -31,24 +32,24 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a class="btn btn-success mb-4 text-bold" href="{{ route('exams.create') }}">Add New + </a>
+                  <a class="btn btn-success mb-4 text-bold" href="{{ route('professor.exam_structure.create',$exam_id) }}">Add New + </a>                 
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Subject name</th>
-                    <th>Professor Name</th>
+                    <th>Exam Name</th>
+                    <th>Chapter Name</th>
+                    <th>Model type</th>
+                    <th>Questions Number</th>
                     <th>Actions</th>
                   </tr>
                   </thead>
                   <tbody>
-                @foreach($exams as $exam)  
+                @foreach($exam_structures as $exam_structure)  
                   <tr>
-                    <td>{{ $exam->id}}</td>
-                    <td>{{ $exam->exam_name}}</td>
-                    <td>{{ $exam['subjects']->name}}</td>
-                    <td>{{ $exam['professors']->name}}</td>
+                    <td>{{ $exam_structure['exam']->exam_name}}</td>
+                    <td>{{ $exam_structure['chapter']->name}}</td>
+                    <td>{{ $exam_structure['model_type']->type}}</td>
+                    <td>{{ $exam_structure->number_quest}}</td>
                     <td>
                       <div class="btn-group">
                         <button type="button" class="btn btn-info">Action</button>
@@ -56,10 +57,8 @@
                         <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu" role="menu" style="">
-                        <a class="dropdown-item" href="{{ route('exam_structure.index',$exam->id) }}">Exam Structure</a>
-                        <a class="dropdown-item" href="{{ route('studnets.grades',$exam->id) }}">View Students Grades</a>
-                        <a class="dropdown-item" href="{{ route('exams.edit',$exam->id) }}">Edit</a>
-                        <form method="post" action="{{ route('exams.destroy',$exam->id) }}">
+                        <a class="dropdown-item" href="{{ route('professor.exam_structure.edit',[$exam_id,$exam_structure->id]) }}">Edit</a>
+                        <form method="post" action="{{ route('professor.exam_structure.destroy',[$exam_id,$exam_structure->id]) }}">
                           @method('delete')
                           @csrf
                           <button class="dropdown-item">Delete</button>

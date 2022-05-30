@@ -31,7 +31,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a class="btn btn-success mb-4 text-bold" href="{{ route('exams.create') }}">Add New + </a>
+                <a class="btn btn-success mb-4 text-bold" href="{{ route('professor.exams.create') }}">Add New + </a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -56,10 +56,10 @@
                         <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu" role="menu" style="">
-                        <a class="dropdown-item" href="{{ route('exam_structure.index',$exam->id) }}">Exam Structure</a>
-                        <a class="dropdown-item" href="{{ route('studnets.grades',$exam->id) }}">View Students Grades</a>
-                        <a class="dropdown-item" href="{{ route('exams.edit',$exam->id) }}">Edit</a>
-                        <form method="post" action="{{ route('exams.destroy',$exam->id) }}">
+                        <a class="dropdown-item" href="{{ route('professor.exam_structure.index',$exam->id) }}">Exam Structure</a>
+                        <a class="dropdown-item" href="{{ route('professor.studnets.grades',$exam->id) }}">View Students Grades</a>
+                        <a class="dropdown-item" href="{{ route('professor.exams.edit',$exam->id) }}">Edit</a>
+                        <form method="post" action="{{ route('professor.exams.destroy',$exam->id) }}">
                           @method('delete')
                           @csrf
                           <button class="dropdown-item">Delete</button>
